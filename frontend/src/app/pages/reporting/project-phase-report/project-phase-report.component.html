@@ -1,0 +1,43 @@
+<div class="container1">
+  <div class="subheader1">
+    <h2>Project Phase Report</h2>
+    <div id="reportContent">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <canvas #projectPhaseChart width="300" height="300"></canvas>
+      </div>
+      <div *ngIf="reportData.length > 0" class="text-end" style="margin: 10px">
+        <button (click)="exportToPDF()" class="btn1 btn-primary1">Export Report</button>
+      </div>
+
+      <div *ngIf="reportData.length === 0" class="alert text-center" style="color: #001844; border: solid 1px #001844; background-color: #869ec3; margin-top: 10px;">
+        <b>There are no active projects!</b>
+      </div>
+
+      <div *ngIf="reportData.length > 0" class="text-center" style="margin: 10px">
+        <strong>Total Projects: {{ totalProjects }}</strong>
+      </div>
+
+      <div class="row">
+        <div class="col" *ngFor="let report of reportData" style="border-radius: 10px; 
+          background-color: white; border: 1px solid #001844; margin: 10px; padding:10px">
+          <table>
+            <thead>
+              <tr>
+                <th style="color: #001844;">
+                  <div class="row">
+                  <div class="col">{{ report.projectPhase }}</div>
+                  <div class="col text-end">{{ report.count }} Projects</div>
+                </div></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let projectName of report.projects" style="border-bottom: 1px solid #001844;">
+                <td>{{ projectName }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="container1">
+    <h2>System</h2>
+    <div class="subheader1">
+        <div class="row">
+          <div class="col"><h3>List of Cities</h3></div>
+          <div class="col text-end"><button class="btn1 btn-primary1" (click)="openModal(false)" >Add New City +</button></div>
+        </div>
+    </div>
+
+    <hr style="margin-bottom: 10px;"> 
+    <div class="row justify-content-between mb-0 mt-0">
+      <div class="col-12">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search cities...">
+          <div class="input-group-append">
+            <span class="input-group-text"><box-icon name='search'></box-icon></span>
+          </div>
+        </div>
+      </div>
+    </div> 
+
+    <table class="content-table mt-3">
+        <thead>
+          <tr>
+            <th>City Name</th>
+            <th width="10%">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let city of cities| paginate: { itemsPerPage: 10, currentPage: page }">
+            <td>{{ city.cityName }}</td>
+            <td>
+              <box-icon name='edit' color='#001844' (click)="openModal(true, city)"></box-icon>
+              <box-icon name='trash' color='#ef0000' (click)="deleteCity(city.cityId)"></box-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls *ngIf="cities.length > 0" (pageChange)="page = $event" class="text-end"></pagination-controls>
+    
+      <div *ngIf="showModal" class="modal">
+        <div class="modal-content">
+          <span class="close" (click)="closeModal()">&times;</span>
+          <h2>{{ isUpdate ? 'Update City' : 'Add City' }}</h2>
+          <form (ngSubmit)="saveCity()">
+            <div class="form-group1">
+              <label for="cityName" class="form-label">City Name:</label>
+              <input class="form-control1" id="cityName" [(ngModel)]="city.cityName" name="cityName" required placeholder="City Name">
+            </div>
+            <div class="form-group1">
+              <label for="countryId" class="form-label">Country:</label>
+              <select class="form-control1" id="countryId" [(ngModel)]="selectedCountryId" name="countryId" required (change)="onCountryChange($event)">
+                <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
+              </select>
+            </div>
+            <div class="form-group1">
+              <label for="regionId" class="form-label">Region:</label>
+              <select class="form-control1" id="regionId" [(ngModel)]="city.regionId" name="regionId" required [disabled]="!selectedCountryId">
+                <option *ngFor="let region of regions" [value]="region.regionId">{{ region.regionName }}</option>
+              </select>
+            </div>
+
+            <div class="d-flex justify-content-center mt-4">                    
+              <button type="submit" class="btn1 btn-primary1">{{ isUpdate ? 'Update' : 'Save' }}</button> 
+              <button type="button" class="btn1 btn-cancel1 ms-2" (click)="closeModal()">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+</div>

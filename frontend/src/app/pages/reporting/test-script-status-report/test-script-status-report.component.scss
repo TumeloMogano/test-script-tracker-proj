@@ -1,0 +1,120 @@
+.containerR {
+  margin: 20px;
+}
+
+.search-input {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tableR {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableR th, .tableR td {
+  padding: 12px;
+  text-align: left;
+}
+
+.tableR th {
+  cursor: pointer;
+  background-color: #f2f2f2;
+}
+
+.tableR th:hover {
+  background-color: #ddd;
+}
+
+.table-stripedR tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+.table-borderedR th, .table-bordered td {
+  border: 1px solid #ddd;
+}
+
+.pagination-controls {
+  margin-top: 10px;
+  text-align: center;
+}
+
+button.highlighted {
+  background-color: #007bff; /* Highlight color */
+  color: white;
+}
+
+// @media (max-width: 992px) {
+
+//   .col-md-4 .col-sm-12 {
+//     width: 100%;
+//   }
+
+//   .chart-item {
+//     height: 180px;
+//     width: 180px;
+//   }
+// }
+
+
+// /* test-script-reports.component.css */
+// table {
+//     width: 100%;
+//     border-collapse: collapse;
+//     margin-bottom: 20px;
+//   }
+  
+//   table, th, td {
+//     border: 1px solid black;
+//   }
+  
+//   th, td {
+//     padding: 8px;
+//     text-align: left;
+//   }
+  
+//   th {
+//     background-color: #f2f2f2;
+//   }
+  
+//   button {
+//     margin: 10px 5px;
+//     padding: 10px 20px;
+//     background-color: #007bff;
+//     color: white;
+//     border: none;
+//     cursor: pointer;
+//   }
+  
+//   button:hover {
+//     background-color: #0056b3;
+//   }
+  
+//   canvas {
+//     display: block;
+//     margin: 20px auto;
+//   }
+  
+//   div {
+//     margin-bottom: 20px;
+//   }
+  
+//   select {
+//     padding: 5px;
+//     margin: 10px 5px;
+//   }
+  
+//   button.clear-filter {
+//     background-color: #dc3545;
+//   }
+  
+//   button.clear-filter:hover {
+//     background-color: #c82333;
+//   }
+  
+//   .box-icon {
+//     cursor: pointer;
+//   }
+  

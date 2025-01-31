@@ -1,0 +1,108 @@
+h2.team-title {
+  background-color: #001844;
+  text-align: center;
+  color: #ffffff;
+  max-width: 100%;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.container1 h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #869ec3;
+
+  font-weight: bold;
+  padding-top: 10px;
+}
+
+.container1.team-member {
+  position: relative;
+  overflow: visible;
+}
+
+/* team option dropdown styling*/
+.three-dots-icon {
+  cursor: pointer;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  position: relative;
+}
+
+.three-dots-icon:hover {
+  background-color: #d3d3d3;
+}
+
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  padding: 5px 0;
+  top: 20px;
+  left: -100px;
+  display: none;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+.dropdown-row {
+    overflow: visible !important;
+}
+
+.content-table.members-table {
+    overflow: visible;
+    border-radius: 5px 5px 0 0 !important;
+}
+
+.manage-icon{
+    padding-top: 5px;
+}
+
+.selected {
+  background-color: #d4edda !important; /* Light green background for selected rows */
+  color: #155724;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+

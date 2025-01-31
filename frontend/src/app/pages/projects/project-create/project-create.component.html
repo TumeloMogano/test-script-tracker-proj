@@ -1,0 +1,126 @@
+<div class="container1">
+  <div>
+    <box-icon name='arrow-back' color='#001844' (click)="goBack()">Back</box-icon>
+  </div>
+  <div class="subheader1">
+    <h2>Add New Project</h2>
+    <div class="row justify-content-between" *ngIf="client">
+      <div class="col-11"><p style="margin-top: 5px; margin-bottom: 0;padding-bottom: 0;">Adding Project for Client: <strong>{{client.clientName}}</strong></p></div>
+      <!-- <div class="col-1 align-contents-end" style="margin-right: 0; padding-right: 0;"><box-icon name='chevron-down'></box-icon></div> -->
+  </div>
+  
+  <hr style="margin-bottom: 20px;margin-top: 5px;"> 
+
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+      <div class="form-group1">
+        <label for="projectName">Project Name</label>
+        <input id="projectName" formControlName="projectName" class="form-control1" placeholder="Project name" required>
+        <div *ngIf="projectForm.controls['projectName'].invalid && (projectForm.controls['projectName'].dirty || projectForm.controls['projectName'].touched)">
+          <div class="text-danger" *ngIf="projectForm.controls['projectName'].errors?.['required']">Project Name is required.</div>
+          <div class="text-danger" *ngIf="projectForm.controls['projectName'].errors?.['minlength']">Project Name must be at least 5 characters long.</div>
+          <div class="text-danger" *ngIf="projectForm.controls['projectName'].errors?.['maxlength']">Project Name cannot be more than 30 characters long.</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group1 col">
+          <label for="startDate">Start Date</label>
+          <input type="date" id="startDate" formControlName="startDate" class="form-control1" placeholder="Start date" required>
+          <div *ngIf="projectForm.controls['startDate'].invalid && (projectForm.controls['startDate'].dirty || projectForm.controls['startDate'].touched)">
+            <div class="text-danger" *ngIf="projectForm.controls['startDate'].errors?.['required']">Start Date is required.</div>
+            <div class="text-danger" *ngIf="projectForm.controls['startDate'].errors?.['startDateInvalid']">Start Date cannot be in the past.</div>
+          </div>
+        </div>
+        <div class="form-group1 col">
+          <label for="endDate">End Date</label>
+          <input type="date" id="endDate" formControlName="endDate" class="form-control1" placeholder="End date" required>
+          <div *ngIf="projectForm.controls['endDate'].invalid && (projectForm.controls['endDate'].dirty || projectForm.controls['endDate'].touched)">
+            <div class="text-danger" *ngIf="projectForm.controls['endDate'].errors?.['required']">End Date is required.</div>
+            <div class="text-danger" *ngIf="projectForm.controls['endDate'].errors?.['endDateInvalid']">End Date cannot be before the Start Date.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group1">
+        <label for="projectDescription">Project Description</label>
+        <textarea id="projectDescription" formControlName="projectDescription" class="form-control1"placeholder="Project description" required></textarea>
+        <div *ngIf="projectForm.controls['projectDescription'].invalid && (projectForm.controls['projectDescription'].dirty || projectForm.controls['projectDescription'].touched)">
+          <div class="text-danger" *ngIf="projectForm.controls['projectDescription'].errors?.['required']">Project Description is required.</div>
+          <div class="text-danger" *ngIf="projectForm.controls['projectDescription'].errors?.['minlength']">Project Description must be at least 10 characters long.</div>
+          <div class="text-danger" *ngIf="projectForm.controls['projectDescription'].errors?.['maxlength']">Project Description cannot be more than 150 characters long.</div>
+        </div>
+      </div>
+
+        <!-- <div class="form-check ms-1 mb-3">
+          <input class="form-check-input custom-checkbox" type="checkbox" formControlName="assignTeam" id="assignTeamCheckbox" >
+          <label class="form-check-label" for="assignTeamCheckbox">
+            Assign Team ?
+          </label>
+        </div>
+        <div class="form-group1 mb-4" *ngIf="projectForm.controls['assignTeam'].value">
+          <label for="teamId">Team </label>
+          <select id="teamId" class="form-control1" formControlName="teamId" >
+              <option value="" disabled selected>Select a team</option>
+              <option *ngFor="let team of teams" [value]="team.teamId">{{ team.teamName }}</option>
+          </select>  
+          <div *ngIf="projectForm.controls['teamId'].invalid && (projectForm.controls['teamId'].dirty || projectForm.controls['teamId'].touched)">
+            <div class="text-danger" *ngIf="projectForm.controls['teamId'].errors?.['required']">Please select a team.</div>
+          </div> 
+        </div>
+        <div class="d-flex justify-content-center">                    
+          <button type="submit" class="btn1 btn-primary1" style="margin-right: 10px;">Submit</button>
+          <button type="button" class="btn1 btn-cancel1" (click)="cancel()">Cancel</button>
+      </div> -->
+
+      <div class="row">
+        <!-- Assign Team and Client Rep side by side -->
+        <div *ngIf="hasPermission(Permissions.SystemAdministrator)" class="col-md-6">
+          <div class="form-check ms-1 mb-3">
+            <input class="form-check-input custom-checkbox" type="checkbox" formControlName="assignTeam" id="assignTeamCheckbox">
+            <label class="form-check-label" for="assignTeamCheckbox">Assign Team?</label>
+          </div>
+          <div class="form-group1" *ngIf="projectForm.controls['assignTeam'].value">
+            <label for="teamId">Team</label>
+            <select id="teamId" class="form-control1" formControlName="teamId">
+              <option value="" disabled selected>Select a team</option>
+              <option *ngFor="let team of teams" [value]="team.teamId">{{ team.teamName }}</option>
+            </select>
+            <div *ngIf="projectForm.controls['teamId'].invalid && (projectForm.controls['teamId'].dirty || projectForm.controls['teamId'].touched)">
+              <div class="text-danger" *ngIf="projectForm.controls['teamId'].errors?.['required']">Please select a team.</div>
+            </div>
+            <div *ngIf="projectForm.controls['assignTeam'].value && teams.length === 0" class="text-danger">
+              No teams available with team members and a team lead. You can assign one later. Please uncheck the checkbox!
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="hasPermission(Permissions.SystemAdministrator)" class="col-md-6">
+          <div class="form-check ms-1 mb-3">
+            <input class="form-check-input custom-checkbox" type="checkbox" formControlName="assignClientRep" id="assignClientRepCheckbox">
+            <label class="form-check-label" for="assignClientRepCheckbox">Assign Client Representative?</label>
+          </div>
+          <div class="form-group1" *ngIf="projectForm.controls['assignClientRep'].value && clientReps.length > 0">
+            <label for="responsibleClientRep">Client Representative</label>
+            <select id="responsibleClientRep" class="form-control1" formControlName="responsibleClientRep">
+              <option value="" disabled selected>Select a client representative</option>
+              <option *ngFor="let rep of clientReps" [value]="rep.repEmailAddress">{{ rep.repName }} {{ rep.repSurname }}</option>
+            </select>
+            <div *ngIf="projectForm.controls['responsibleClientRep'].invalid && (projectForm.controls['responsibleClientRep'].dirty || projectForm.controls['responsibleClientRep'].touched)">
+              <div class="text-danger" *ngIf="projectForm.controls['responsibleClientRep'].errors?.['required']">Please select a client representative.</div>
+            </div>
+          </div>
+          <div *ngIf="projectForm.controls['assignClientRep'].value && clientReps.length === 0" class="text-danger">
+            There are no client representatives available for <strong>{{this.client?.clientName}}</strong>. You can assign one later. Please uncheck the checkbox!
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit and Cancel Buttons -->
+      <div class="d-flex justify-content-center mt-4">                    
+        <button type="submit" class="btn1 btn-primary1" style="margin-right: 10px;">Submit</button>
+        <button type="button" class="btn1 btn-cancel1" (click)="cancel()">Cancel</button>
+      </div>
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+.container {
+    display: flex;
+  }
+  
+  .home-section1{
+    flex: 1;
+    transition: all .5s ease;
+  }
+
+  .custom-confirm-dialog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff; /* Fully white background */
+    border-radius: 12px; /* Rounded corners for the dialog */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for visual depth */
+  }
+  
+  .icon-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 6rem;
+    width: 6rem;
+    border-radius: 50%;
+    background-color: #869ec3; /* Primary color */
+  }
+  
+  .icon {
+    font-size: 5rem;
+    color: #001844; /* White color for the icon */
+  }
+  
+  .title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  .message {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .custom-confirm-button {
+    background-color: #869ec3; /* Custom color */
+    color: #001844; /* Custom text color */
+    border: none;
+    font-weight: bold;
+    border-radius: 8px; /* Rounded corners for the button */
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .custom-cancel-button {
+    background-color: #cfd1d3; /* Custom color */
+    color: #cd1543; /* Custom text color */
+    border: none;
+    font-weight: bold;
+
+    border-radius: 8px; /* Rounded corners for the button */
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .custom-confirm-button:hover {
+    background-color: #7486a1; /* Darker shade on hover */
+  }
+  
+  .custom-cancel-button:hover {
+    background-color: #b8babc; /* Darker shade on hover */
+  }
+  
+

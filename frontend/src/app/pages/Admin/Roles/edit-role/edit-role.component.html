@@ -1,0 +1,33 @@
+<div class="container1">
+    <box-icon name="arrow-back" color="#001844" (click)="cancel()">Back</box-icon>
+    <h2>Roles</h2>
+    <div class="subheader1">
+      <h3>Update Role...</h3>
+    </div>
+    <hr style="margin-bottom: 25px;">
+    <form [formGroup]="editRoleForm" (ngSubmit)="confirmUpdate()">
+      <div class="form-group1">
+        <label for="roleName" class="form-label">Role Name *</label>
+        <input type="text" id="roleName" class="form-control1" formControlName="roleName" placeholder="Role name"
+        [ngClass]="{'input-invalid': f['roleName'].touched && f['roleName'].invalid}">
+        <div *ngIf="f['roleName'].touched && f['roleName'].invalid" class="text-danger">
+          <small *ngIf="f['roleName'].errors?.['required']" style="color: rgb(163, 58, 58);">Role Name is required.</small>
+        </div>
+      </div>
+      <div class="form-group1">
+        <label for="roleDescription" class="form-label">Role Description *</label>
+        <textarea id="roleDescription" class="form-control1" formControlName="roleDescription" placeholder="Role Description"
+        [ngClass]="{'input-invalid': f['roleDescription'].touched && f['roleDescription'].invalid}"></textarea>
+        <div *ngIf="f['roleDescription'].touched && f['roleDescription'].invalid" class="text-danger">
+          <small *ngIf="f['roleDescription'].errors?.['required']" style="color: rgb(163, 58, 58);">Role Description is required.</small>
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn1 btn-primary1" [disabled]="editRoleForm.invalid">Update</button>
+        <button type="button" class="btn1 btn-cancel1 ms-2" (click)="confirmCancel()">Cancel</button>
+      </div>
+      <!-- <button type="submit" class="btn1 btn-primary1" [disabled]="editRoleForm.invalid">Update</button>
+      <button type="button" class="btn1 btn-cancel1 ms-2" (click)="confirmCancel()">Cancel</button> -->
+    </form>
+  </div>
+  

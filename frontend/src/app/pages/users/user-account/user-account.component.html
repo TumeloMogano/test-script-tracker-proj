@@ -1,0 +1,98 @@
+<div class="container1">
+    <h2>My Account</h2>
+    <div class="subheader1">
+        <h3 style="margin-top: 2px; padding-top: 0;">View Account Profile</h3>
+    </div>
+    <h2 class="user-title">{{ user?.userFirstName }} {{ user?.userSurname }}</h2>
+    
+    <div class="row mt-4">
+        <div class="col-3">
+            <p style="margin-top: 5px; margin-bottom: 0;padding-bottom: 0;">User Account Details</p>
+            <hr class="section-divider mb-4" />
+
+            <div class="card">
+                <div class="card-body text-center">
+                    <p class="card-text mb-1">
+                        <span class="bold-text">Names:<br></span> {{ user?.userFirstName }} {{ user?.userSurname }}
+                    </p>
+                    <p class="card-text mb-1">
+                        <span class="bold-text">Contact Number:<br></span> {{ user?.userContactNumber }}
+                    </p>
+                    <p class="card-text mb-1">
+                        <span class="bold-text">Identity Number:<br></span> {{ user?.userIDNumber }}
+                    </p>
+                    <p class="card-text mb-1">
+                        <span class="bold-text">Email:<br></span> {{ user?.userEmailAddress }}
+                    </p>
+                    <p class="card-text mb-1">
+                        <span class="bold-text">Date Registered:<br></span> {{ user?.registrationDate | date: 'longDate' }}
+                    </p>
+                </div>
+                <div class="card-footer text-body-secondary">
+                    <div class="btn-container mt-1 mb-2 text-center">
+                        <button class="btn1 btn-primary1" (click)="goUpdatePassword()">Update Password</button>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <!-- Right Section (Other Information) -->
+        <div class="col-9">
+            <p style="margin-top: 5px; margin-bottom: 0;padding-bottom: 0;">Other Information</p>
+            <hr class="section-divider" />
+
+            <!-- <h4>Other Information</h4> -->
+            
+                <div class="row">
+                    <div class="col-2">
+                        <div class="image-container mt-3 mb-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" style="fill: #001844;"><path d="M12 2C6.579 2 2 6.579 2 12s4.579 10 10 10 10-4.579 10-10S17.421 2 12 2zm0 5c1.727 0 3 1.272 3 3s-1.273 3-3 3c-1.726 0-3-1.272-3-3s1.274-3 3-3zm-5.106 9.772c.897-1.32 2.393-2.2 4.106-2.2h2c1.714 0 3.209.88 4.106 2.2C15.828 18.14 14.015 19 12 19s-3.828-.86-5.106-2.228z"></path></svg>
+                        </div>                     
+                    </div>
+                    <div class="col-10 mb-0">
+                        <table class="content-tableR mt-3">
+                            <thead>
+                                <tr>
+                                    <th>Quick Actions</th>
+                                    <th width="19%"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>View Dashboard</td>
+                                    <td><a [routerLink]="['/dashboard']">Navigate >>></a></td>
+                                </tr>
+                                <!-- <tr>
+
+                                    <td>View Calendar</td>
+                                    <td><a [routerLink]="['/calendar']">Navigate >>></a></td>
+
+                                </tr> -->
+                                <tr>
+                                    <td>View Projects</td>
+                                    <td><a [routerLink]="['/projects']">Navigate >>></a></td>
+                                </tr>
+                                <tr>
+                                    <td>View Teams</td>
+                                    <td><a [routerLink]="['/teams']">Navigate >>></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+
+            <div class="date-filter border border-secondary rounded mt-4" >
+                <div class="row align-items-center">
+                    <div class="col-3 form-group1">
+                        <!-- <input type="button" (click)="goUpdatePassword()" class="btn btn-secondary form-control1 pt-2" value="Update Password" style="padding-top: 5px;"> -->
+                    </div>
+                    <div class="col-3 form-group1">
+                        <!-- <input type="button" (click)="onLogout()" class="btn btn-secondary form-control1" value="LogOut" style="padding-top: 5px;"> -->
+                    </div>
+                </div> 
+            </div>
+    </div> 
+</div>

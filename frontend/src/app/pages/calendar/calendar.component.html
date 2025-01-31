@@ -1,0 +1,220 @@
+
+<div class="container1">
+  <h2>Test Schedule</h2>
+
+  <div class="calendar-header">
+    <h2>{{ currentDate | date: 'MMMM yyyy' }}</h2>
+    <div class="controls">
+      <div class="dropdown">
+        <button class="dropbtn">View</button>
+        <div class="dropdown-content">
+          <a (click)="changeView('day')">Day</a>
+          <a (click)="changeView('week')">Week</a>
+          <a (click)="changeView('month')">Month</a>
+        </div>
+      </div>
+      <button (click)="prev()">Prev</button>
+      <button (click)="next()">Next</button>
+      <button (click)="resetToToday()">Today</button>
+    </div>
+  </div>
+
+  <div *ngIf="currentView === 'month'">
+    <div class="calendar">
+      <div class="calendar-days">
+        <div class="calendar-day" *ngFor="let day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']">
+          {{ day }}
+        </div>
+      </div>
+      <div class="calendar-dates">
+        <div class="calendar-date" 
+             *ngFor="let day of getDaysInMonth()" 
+             (click)="onDateClick(day.date)"
+             [class.today]="isToday(day.date)">
+          {{ day.day }}
+          <div class="event" 
+               *ngFor="let event of events " 
+               [class.hidden]="!isSameDate(event.scheduleEventDate, day.date)"
+               (click)="onEventClick(event)">
+            {{ event.scheduleEventName }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="currentView === 'week'">
+    <div class="calendar-week">
+      <div class="week-header">
+        <div class="time-column"></div> 
+        <div class="day-header" *ngFor="let day of getDaysInWeek(currentDate)">
+          {{ day.dayName }}<br>{{ day.date | date: 'MMMM d' }}
+        </div>
+      </div>
+      <div class="week-body">
+        <div class="time-column">
+          <div *ngFor="let time of getDayTimes()" class="time-label">
+            {{ time.time }}
+          </div>
+        </div>
+        <div class="days-columns">
+          <div class="week-day" *ngFor="let day of getDaysInWeek(currentDate)">
+            <div class="time-slot" 
+                 *ngFor="let time of getDayTimes()"
+                 (click)="onTimeClick(day.date, time.time)">
+              <div class="event" 
+                   *ngFor="let event of events" 
+                   [class.hidden]="!isSameDate(event.scheduleEventDate, day.date) || !isSameTime(event.eventTimeStart, time.time)"
+                   (click)="onEventClick(event)">
+                {{ event.scheduleEventName }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="currentView === 'day'">
+    <div class="calendar-day-view">
+      <div class="day-header">
+        <div class="day-name">{{ currentDate | date: 'EEEE' }}</div>
+        <div class="date">{{ currentDate | date: 'MMMM d, yyyy' }}</div>
+      </div>
+      <div class="calendar-time" 
+           *ngFor="let time of getDayTimes()" 
+           [id]="'time-' + time.time.split(':')[0]"
+           [class.highlight]="isToday(currentDate) && time.time.split(':')[0] == today.getHours().toString()"
+           (click)="onTimeSlotClick(currentDate, time.time)">
+        <div class="time-label">{{ time.time }}</div>
+        <div class="events">
+          <div class="event" 
+               *ngFor="let event of events" 
+               [class.hidden]="!isSameDate(event.scheduleEventDate, currentDate) || !isSameTime(event.eventTimeStart, time.time)"
+               (click)="onEventClick(event)">
+            {{ event.scheduleEventName }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Modal for Create Event -->
+  <div id="createEventModal" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Create Event</h2>
+      <form #createForm="ngForm" (ngSubmit)="createEvent()">
+        <div class="form-group">
+          <label for="eventName">Event Name:</label>
+          <input type="text" id="eventName" [(ngModel)]="newEvent.scheduleEventName" name="eventName" placeholder="Enter event name here..."   required>
+          <!-- <div *ngIf="createForm.submitted && !newEvent.scheduleEventName" class="error">Event name is required.</div> -->
+          <div *ngIf="createForm.submitted && newEvent.scheduleEventName.length <= 20" class="error">Event name must be more than 20 characters.</div>
+        </div>
+        <div class="form-group">
+          <label for="eventDescription">Description:</label>
+          <textarea id="eventDescription" [(ngModel)]="newEvent.eventDescription" name="eventDescription" placeholder="Enter event description..." required></textarea>
+          <!-- <div *ngIf="createForm.submitted && !newEvent.eventDescription" class="error">Description is required.</div> -->
+          <div *ngIf="createForm.submitted && newEvent.eventDescription.length <= 50" class="error">Description must be more than 50 characters.</div>
+        </div>
+        <div class="form-group">
+          <label for="eventTimeStart">Start Time:</label>
+          <select id="eventTimeStart" [(ngModel)]="newEvent.eventTimeStart" name="eventTimeStart" required>
+            <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
+          </select>
+          <!-- <div *ngIf="createForm.submitted && !newEvent.eventTimeStart" class="error">Start time is required.</div> -->
+          <div *ngIf="createForm.submitted && !newEvent.eventTimeStart" class="error">Start time is required.</div>
+        </div>
+        <div class="form-group">
+          <label for="eventTimeEnd">End Time:</label>
+          <select id="eventTimeEnd" [(ngModel)]="newEvent.eventTimeEnd" name="eventTimeEnd" required>
+            <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
+          </select>
+          <!-- <div *ngIf="createForm.submitted && !newEvent.eventTimeEnd" class="error">End time is required.</div> -->
+          <div *ngIf="createForm.submitted && !newEvent.eventTimeEnd" class="error">End time is required.</div>
+        </div>
+        <div class="form-group">
+          <label for="teamSelect">Team:</label>
+          <select id="teamSelect" [(ngModel)]="newEvent.teamId" name="teamSelect" required>
+            <option *ngFor="let team of teams" [value]="team.teamId">{{ team.teamName }}</option>
+          </select>
+          <!-- <div *ngIf="createForm.submitted && !newEvent.teamId" class="error">Team selection is required.</div> -->
+          <div *ngIf="createForm.submitted && !newEvent.teamId" class="error">Team selection is required.</div>
+        </div>
+        
+        <div class="action-buttons d-flex justify-content-center mt-4">
+          <!-- <button class="btn1 btn-primary1" (click)="openUpdateModal()">Update</button> -->
+          <button type="submit" class="btn1 btn-primary1">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for Viewing/Updating Event -->
+  <div id="editEventModal" class="modal">
+    <div class="modal-content" *ngIf="selectedEvent">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <!-- <div class="modal-icons">
+        <i class="fa fa-trash" (click)="deleteEvent(selectedEvent.scheduleEventId || '')"></i>
+        <i class="fa fa-pencil" (click)="editEvent()"></i>
+      </div> -->
+      <h2>{{ selectedEvent.scheduleEventName }}</h2>
+      <form #updateForm="ngForm" (ngSubmit)="updateEvent()">
+        <div class="form-group">
+          <label for="eventName">Event Name:</label>
+          <input type="text" id="eventName" placeholder="please enter event name here" [(ngModel)]="selectedEvent.scheduleEventName" name="eventName" required>
+          <div *ngIf="updateForm.submitted && selectedEvent.scheduleEventName.length <= 20" class="error">Event name must be more than 20 characters.</div>
+        </div>
+        <div class="form-group">
+          <label for="eventDescription">Description:</label>
+          <textarea id="eventDescription" placeholder="please enter event description here" [(ngModel)]="selectedEvent.eventDescription" name="eventDescription" required></textarea>
+          <div *ngIf="updateForm.submitted && !selectedEvent.eventDescription" class="error">Description is required.</div>
+        </div>
+        <div class="form-group">
+          <label for="eventDate">Date:</label>
+          <input type="date" id="eventDate" placeholder="please select the event date here"[ngModel]="formatDateForInput(selectedEvent.scheduleEventDate)" name="eventDate" (ngModelChange)="onDateChange($event)">
+          <div *ngIf="updateForm.submitted && !selectedEvent.scheduleEventDate" class="error">Date is required.</div>
+        </div>
+        <div class="form-group">
+          <label for="eventTimeStart">Start Time:</label>
+          <input type="time" id="eventTimeStart" [(ngModel)]="selectedEvent.eventTimeStart" name="eventTimeStart" required>
+          <div *ngIf="updateForm.submitted && !selectedEvent.eventTimeStart" class="error">Start time is required.</div>
+        </div>
+        <div class="form-group">
+          <label for="eventTimeEnd">End Time:</label>
+          <input type="time" id="eventTimeEnd" [(ngModel)]="selectedEvent.eventTimeEnd" name="eventTimeEnd" required>
+          <div *ngIf="updateForm.submitted && !selectedEvent.eventTimeEnd" class="error">End time is required.</div>
+        </div>
+        <div class="form-group">
+          <label for="teamSelect">Team:</label>
+          <select id="teamSelect" [(ngModel)]="selectedEvent.teamId" name="teamSelect" required>
+            <option *ngFor="let team of teams" [value]="team.teamId">{{ team.teamName }}</option>
+          </select>
+          <div *ngIf="updateForm.submitted && !selectedEvent.teamId" class="error">Team selection is required.</div>
+        </div>
+        <div class=" d-flex justify-content-center mt-4">
+          <button type="submit" class="btn1 btn-primary1">Update</button>
+          <button type="button" class="btn1 btn-cancel1 ms-2" (click)="deleteEvent(selectedEvent.scheduleEventId || '')">Delete</button>       
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div id="viewEventDetailsModal" class="modal" *ngIf="selectedEvent">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>{{ selectedEvent.scheduleEventName }}</h2>
+      <div class="event-details">
+        <p><strong>Description:</strong> {{ selectedEvent.eventDescription }}</p>
+        <p><strong>Start Time:</strong> {{ selectedEvent.eventTimeStart }} </p>
+        <p><strong>End Time:</strong> {{ selectedEvent.eventTimeEnd }}</p>
+        <p><strong>Team:</strong> {{ getTeamName(selectedEvent.teamId) || '' }}</p>
+        <p><strong>Date:</strong> {{ selectedEvent.scheduleEventDate | date: 'fullDate' }}</p>
+      </div>
+      <div class="action-buttons d-flex justify-content-center mt-4">
+        <button class="btn1 btn-primary1" (click)="openUpdateModal()">Update</button>
+      </div>
+    </div>
+  </div>

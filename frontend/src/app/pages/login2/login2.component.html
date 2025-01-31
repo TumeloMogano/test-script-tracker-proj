@@ -1,0 +1,53 @@
+<div class="parent1">
+      
+        <div class="form-container sign-in-container">
+            <form (ngSubmit)="onSubmit()">
+              <div class="logo-container" >
+                <img src="assets/NewLogoWithSlogan.png" alt="Test Script Tracker Logo" class="logo-image">
+              </div>
+                <h1 class="mb-2 mt-1">WELCOME BACK </h1>
+                <span>Please enter your details.</span>
+                <h2>Email Address</h2>
+                <input type="email" id="email" placeholder="Enter your email address"  [(ngModel)]="loginData.email" name="email" required/>
+                <!-- <h2>Password</h2> -->
+                <!-- <input type="password" id="password" placeholder="********" [(ngModel)]="loginData.password" name="password" required/> -->
+                <div class="form-group">
+                  <h2>Password</h2>
+                  <div class="password-wrapper">
+                    <input [type]="inputType" id="password" placeholder="********" [(ngModel)]="loginData.password" name="password" required/>
+                    <i class="fas" [ngClass]="eyeIcon" (click)="togglePasswordVisibility()"></i>
+                  </div>
+                </div>
+                             
+                <a href="http://localhost:4200/forgotpassword1"  class="forgot-password-link">Forgot your password?</a> 
+                <a href="http://localhost:4200/user-register"  class="forgot-password-link" >Register</a> 
+                
+                <!-- <button type="submit" class="button" >Sign In</button> -->
+                <button type="submit" class="btn1 btn-primary1" >Sign In</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+                    <img src="assets/login.jpeg" style="width: 100%; height: 100%;">
+            </div>
+        //Error Message 
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Invalid Credentials</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                {{ errorMessage }}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="goBackToLogin()">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+ </div>
+    
+    

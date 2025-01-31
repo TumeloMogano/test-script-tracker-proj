@@ -1,0 +1,191 @@
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { ReportService } from '../../../services/report/report.service';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { AuthService } from '../../../services/auth/auth.service';
+import { AuthUser } from '../../../models/auth/auth.model';
+
+@Component({
+  selector: 'app-assigned-scripts-report',
+  templateUrl: './assigned-scripts-report.component.html',
+  styleUrl: './assigned-scripts-report.component.scss'
+})
+export class AssignedScriptsReportComponent {
+  reportData: any[] = [];
+  projects: any[] = [];
+  teams: any[] = [];
+  filteredProjects: any[] = [];
+  filteredTeams: any[] = [];
+  selectedProject: any = null;
+  selectedTeam: any = null;
+  filteredReportData: any[] = [];
+  order: { key: string, ascending: boolean } = { key: '', ascending: true };
+  page: number = 1;
+  user$: Observable<AuthUser | null>;
+  loggedInUser: AuthUser | null = null;
+  totalAssignedScripts: number = 0; 
+  
+  constructor(
+    private reportService: ReportService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private authService: AuthService
+  ) { 
+    this.user$ = this.authService.userDetails$;
+  }
+
+  ngOnInit(): void {
+    this.loadProjects();
+    this.loadTeams();
+    this.generateReport();
+    this.authService.userDetails$.subscribe(user => {
+      this.loggedInUser = user;
+    });
+  }
+
+  loadProjects(): void {
+    this.reportService.getProjects().subscribe(data => {
+      this.projects = data;
+    });
+  }
+
+  loadTeams(): void {
+    this.reportService.getAllTeams().subscribe(data => {
+      this.teams = data;
+    });
+  }
+
+  filterProjects(event: any): void {
+    const query = event.query.toLowerCase();
+    this.filteredProjects = this.projects.filter(project => project.projectName.toLowerCase().includes(query));
+  }
+
+  filterTeams(event: any): void {
+    const query = event.query.toLowerCase();
+    this.filteredTeams = this.teams.filter(team => team.teamName.toLowerCase().includes(query));
+  }
+
+  generateReport(): void {
+    const projectId = this.selectedProject ? this.selectedProject.projectId : null;
+    const teamId = this.selectedTeam ? this.selectedTeam.teamId : null;
+
+    this.reportService.getAssignedScriptsReport(projectId, teamId).subscribe(data => {
+      this.reportData = data;
+      this.filteredReportData = data;
+      this.totalAssignedScripts = this.calculateTotalAssignedScripts(); 
+    });
+  }
+
+  clearFilter(): void {
+    this.selectedProject = null;
+    this.selectedTeam = null;
+    this.generateReport();
+  }
+
+  setOrder(key: string, ascending: boolean): void {
+    this.order.key = key;
+    this.order.ascending = ascending;
+    this.filteredReportData.sort((a, b) => {
+      if (a[key] < b[key]) return this.order.ascending ? -1 : 1;
+      if (a[key] > b[key]) return this.order.ascending ? 1 : -1;
+      return 0;
+    });
+  }
+
+  calculateTotalAssignedScripts(): number {
+    return this.reportData.reduce((total, item) => total + item.testScripts.length, 0);
+  }
+
+  exportToPDF(): void {
+    this.confirmationService.confirm({
+        header: 'Confirmation',
+        message: 'Are you sure you want to export this report?',
+        accept: () => {
+            const doc = new jsPDF();
+            const currentTime = new Date();
+            const date = currentTime.toLocaleDateString().replace(/\//g, '-');
+            const time = currentTime.toLocaleTimeString().replace(/:/g, '-');
+
+            const generatedBy = this.loggedInUser ? `${this.loggedInUser.firstName} ${this.loggedInUser.surname}` : 'Unknown User';
+
+            const projectFilter = this.selectedProject ? this.selectedProject.projectName : null;
+            const teamFilter = this.selectedTeam ? this.selectedTeam.teamName : null;
+            let filtersText = 'No filters applied';
+
+            if (projectFilter || teamFilter) {
+                filtersText = 'Applied Filters: ';
+                if (projectFilter) {
+                    filtersText += `Project: ${projectFilter}`;
+                }
+                if (teamFilter) {
+                    filtersText += projectFilter ? `, Team: ${teamFilter}` : `Team: ${teamFilter}`;
+                }
+            }
+
+            const img = new Image();
+            img.src = 'assets/company-logo.png';
+            img.onload = () => {
+                doc.addImage(img, 'PNG', 10, 10, 50, 20);
+                doc.setFont('Arial');
+                doc.setFontSize(18);
+                doc.text('EPI-USE Africa', 70, 20);
+
+                doc.setFontSize(10);
+                doc.text(`Generated on:`, 70, 25);
+                doc.text(`Date: ${date} Time: ${time}`, 70, 30);
+                doc.text(`Report generated by: ${generatedBy}`, 70, 35);
+
+                doc.setLineWidth(0.5);
+                doc.line(10, 40, 200, 40);
+                doc.setFontSize(14);
+                doc.setFont('Arial', 'bold');
+                doc.text('Assigned Test Scripts Report', 10, 45);
+
+                doc.setFontSize(11);
+                doc.setFont('Arial', 'normal');
+                doc.text(filtersText, 10, 50);
+
+                doc.setFontSize(12);
+                doc.setFont('Arial', 'bold');
+                doc.text('Test Script Assignment List', 10, 60);
+
+                doc.setFontSize(11);
+                doc.setFont('Arial', 'normal');
+                doc.text(`Total Assigned Test Scripts: ${this.totalAssignedScripts}`, 10, 65);
+
+                const tableData = this.reportData.map(item => [
+                    item.projectName,
+                    item.teamName,
+                    item.userName,
+                    item.testScripts.map((script: any) => script.testScriptTest).join(', ')
+                ]);
+
+                (doc as any).autoTable({
+                    startY: 70,
+                    head: [['Project Name', 'Team Name', 'User Name', 'Test Scripts']],
+                    body: tableData,
+                    headStyles: { fillColor: [0, 24, 68] },
+                    didDrawPage: (data: any) => {
+                        const pageSize = (doc as any).internal.pageSize;
+                        const pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
+                        doc.setFontSize(10);
+                        doc.setFont('Arial', 'normal');
+                        doc.text('Generated from the Test Script Tracker Application', data.settings.margin.left, pageHeight - 10);
+                        doc.text(`Page ${data.pageNumber}`, pageSize.width - data.settings.margin.right - 10, pageHeight - 10);
+                    }
+                });
+
+                doc.save(`AssignedScriptsReport_${date}_${time}.pdf`);
+                this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Report exported successfully', key: 'bc' });
+            };
+        },
+        reject: () => {
+            this.messageService.add({ severity: 'info', summary: 'Cancelled', detail: 'Export cancelled', key: 'bc' });
+        }
+    });
+  }
+}

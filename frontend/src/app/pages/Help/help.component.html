@@ -1,0 +1,49 @@
+<div class="container1">
+  <h2>Help</h2>
+  <div class="subheader1">
+    <div class="col">
+      <h3>How can we help you?</h3>
+    </div>
+  </div>
+
+  <hr style="margin-bottom: 10px;">
+  <div class="row justify-content-between mb-0 mt-0">
+    <div class="col-12">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search Help Items..." [(ngModel)]="searchQuery" (ngModelChange)="onSearch()">
+        <div class="input-group-append">
+          <span class="input-group-text">
+            <box-icon name='search'></box-icon>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="help-container">
+    <div class="questions-list">
+      <ul>
+        <li *ngFor="let item of filteredHelpPages">
+          <div (click)="toggleHelpPage(item.helpPageID)" class="question-item">
+            {{ item.question }}
+            <span class="arrow" [class.expanded]="expandedHelpPageId === item.helpPageID">▼</span>
+          </div>
+          <div class="answer-detail" *ngIf="expandedHelpPageId === item.helpPageID">
+            <p>{{ item.answer }}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="additional-info">
+    <p>
+      For more detailed information, you can download the complete help guide in PDF format.
+      Click the button below to generate and download the PDF.
+    </p>
+    <div style="display: flex; justify-content: center;">
+      <!-- <button class="btn1 btn-primary1" (click)="downloadHelpPdf()">Download Help PDF</button> -->
+      <button class="btn1 btn-primary1" (click)="openHelpPdf()">Download Help PDF</button>
+    </div>
+  </div>
+</div>

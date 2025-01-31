@@ -1,0 +1,38 @@
+<div class="container1">
+  <box-icon name="arrow-back" color="#001844" (click)="cancel()">Back</box-icon>
+    <h2>Teams</h2>
+    <div class="subheader1">
+        <h3>Update Team...</h3>
+    </div>
+    <hr style="margin-bottom: 25px;">
+    <form [formGroup]="editTeamForm" (ngSubmit)="confirmUpdate()">
+      <div class="form-group1">
+        <label for="teamName" class="form-label">Team Name *</label>
+        <input type="text" id="teamName" class="form-control1" formControlName="teamName"
+        [ngClass]="{'input-invalid': f['teamName'].touched && f['teamName'].invalid}">
+        <div *ngIf="f['teamName'].touched && f['teamName'].invalid" class="text-danger">
+          <small *ngIf="f['teamName'].errors?.['required']" style="color: rgb(163, 58, 58);">Team Name is required.</small>
+        </div>
+      </div>
+      <div class="form-group1">
+        <label for="teamDescription" class="form-label">Team Description *</label>
+        <textarea  id="teamDescription" class="form-control1" formControlName="teamDescription"
+        [ngClass]="{'input-invalid': f['teamDescription'].touched && f['teamDescription'].invalid}"></textarea>
+        <div *ngIf="f['teamDescription'].touched && f['teamDescription'].invalid" class="text-danger">
+          <small *ngIf="f['teamDescription'].errors?.['required']" style="color: rgb(163, 58, 58);">Team Description is required.</small>
+        </div>
+      </div>
+      <div class="form-group1">
+        <label for="creationDate" class="form-label">Team Creation Date</label>
+        <input type="date" id="creationDate" class="form-control1" formControlName="creationDate">
+      </div>
+
+      <div class="d-flex justify-content-center mt-4">                    
+        <button type="submit" class="btn1 btn-primary1" [disabled]="editTeamForm.invalid">Update</button>
+        <button type="button" class="btn1 btn-cancel1 ms-2" (click)="cancel()">Cancel</button>
+      </div>
+
+    </form>    
+    <!-- <p-toast key="bc" position="bottom-center" class="p-toast-bottom-center"></p-toast> -->
+    
+  </div>

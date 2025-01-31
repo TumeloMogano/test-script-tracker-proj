@@ -1,0 +1,110 @@
+.card-header-custom {
+    background-color: #001844;
+    color: #ffffff;
+    font-weight: bold;
+  }
+
+  .bold-text {
+    font-weight: bold;
+  }
+
+  h2.template-title {
+    background-color: #001844;
+    text-align: center;
+    color: #ffffff;
+    max-width: 100%;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .table {
+    word-wrap: break-word;
+    table-layout: fixed;
+  }
+  
+  .table th,
+  .table td {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .form-control {
+    max-width: 100%;
+  }
+  
+
+  .add-between {
+    position: relative;
+    height: 30px;
+  }
+  
+  .add-between box-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+  }
+
+  .custom-confirm-dialog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff; 
+    border-radius: 12px; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .content-wrapper {
+    text-align: center;
+  }
+  
+  .dialog-header {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #001844;
+    font-weight: bold;
+  }
+  
+  .message {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center; 
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  .custom-confirm-button, .custom-cancel-button {
+    background-color: #869ec3; 
+    color: #001844; 
+    border: none;
+    font-weight: bold;
+    border-radius: 8px; 
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .custom-cancel-button {
+    background-color: #cfd1d3; 
+    color: #cd1543; 
+  }
+  
+  .custom-confirm-button:hover {
+    background-color: #7486a1; 
+  }
+  
+  .custom-cancel-button:hover {
+    background-color: #b8babc; 
+  }
+  
+
+  

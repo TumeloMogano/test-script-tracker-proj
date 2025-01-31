@@ -1,0 +1,125 @@
+<router-outlet></router-outlet>
+<main>
+  <div class="container1">
+    <h2 class="text-center">WELCOME {{ loggedInUser?.firstName | uppercase }} {{ loggedInUser?.surname | uppercase }}</h2>
+    <div class="row" *ngIf="hasData; else noData">
+      <div class="col-md-9 left-column">
+        <div class="row first-row">
+          <div class="col-md-4 mb-2">
+            <div class="chart-item equal-height">
+              <h6 class="text-center textbold">User Projects By Phase</h6>
+              <p class="text-center">No. of Projects: {{totalProjects}}</p>
+              <canvas id="projectsChart"></canvas>
+            </div>
+          </div>
+          <div class="col-md-4 mb-2">
+            <div class="chart-item equal-height">
+              <h6 class="text-center textbold">User Assigned Test Scripts By Status</h6>
+              <p class="text-center">No. of User Assigned Test Scripts: {{totalTestscripts}}</p>
+              <canvas id="testScriptsChart"></canvas>
+            </div>
+          </div>
+          <div class="col-md-4 mb-2">
+            <div class="chart-item equal-height">
+              <h6 class="text-center textbold">User Team's Test Script Status Metrics</h6>
+              <p class="text-center">No. of User Teams Test Scripts: {{totalTeamsTestscripts}}</p>
+              <!-- <p-autoComplete [(ngModel)]="selectedProject"
+                              [suggestions]="filteredProjects"
+                              (completeMethod)="filterProjects($event)"
+                              (onSelect)="onProjectSelect()"
+                              field="projectName"
+                              placeholder="Filter by Project"
+                              class="text-center"></p-autoComplete> -->
+              <canvas id="testScriptStatusMetricsChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="row second-row">
+          <div class="col-md-4 mb-2">
+            <div class="chart-item equal-height">
+              <h6 class="text-center textbold">User Teams & Active Projects</h6>
+              <p class="text-center">No. of Projects: {{totalProjects}} - No of Teams: {{totalTeams}}</p>
+              <!-- <p><b>No of Teams: {{totalTeams}}</b></p> -->
+              <canvas id="teamsChart"></canvas>
+            </div>
+          </div>
+          <div class="col-md-4 mb-2">
+            <div class="chart-item equal-height">
+              <h6 class="text-center textbold"> User Assigned Test Scripts with Defects</h6>
+              <p class="text-center">No. Defected Test Scripts: {{totalDefectTestscripts}}</p>
+              <canvas id="testScriptsWithDefectsChart"></canvas>
+            </div>
+          </div>
+          <div class="col-md-4 mb-2">
+            <div class="chart-item equal-height">
+              <h6 class="text-center textbold">User Project List</h6>
+              <p class="text-center">No. of Projects: {{totalProjects}}</p>
+              <div class="scrollable-list">
+                <ul>
+                  <li *ngFor="let project of projects">{{ project.projectName }}</li>
+                </ul>
+              </div>         
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-3 right-column">
+        <div class="time-box mb-2">
+          <h3 style="font-weight: bold;">{{ currentDate | date: 'fullDate' }}</h3>
+          <h1 style="font-weight: bold;">{{ currentTime }}</h1>
+        </div>
+
+        <div class="chart-item mb-2 equal-height1">
+          <h6 class="text-center textbold">Upcoming Team Events</h6>
+          <div class="scrollable-list1">
+            <ul *ngIf="events.length; else noEvents">
+              <li *ngFor="let event of events">
+                <!-- <a [routerLink]="['/calendar']">{{ event.scheduleEventName }}</a> -->
+                <a>{{ event.scheduleEventName }}</a>
+                <span>{{ event.scheduleEventDate | date: 'shortDate' }} {{ event.eventTimeStart }} - {{ event.eventTimeEnd }}</span>
+              </li>
+            </ul>
+            <ng-template #noEvents>
+              <p>No upcoming events.</p>
+            </ng-template>
+          </div>
+          <!-- <div class="link-box">
+            <a [routerLink]="['/calendar']">View Full Schedule</a>
+          </div> -->
+        </div>
+
+        <div class="chart-item mb-2 equal-height1">
+          <h6 class="text-center textbold">Recent Notifications</h6>
+          <div class="scrollable-list1">
+            <ul *ngIf="notifications.length; else noNotifications">
+              <li *ngFor="let notification of notifications">
+                <a [routerLink]="['/notifications']">{{ notification.notificationTitle }}</a>
+                <span>{{ notification.notificationDate | date: 'short' }}</span>
+              </li>
+            </ul>
+            <ng-template #noNotifications>
+              <p>No new notifications.</p>
+            </ng-template>
+          </div>
+          <div class="link-box">
+            <a [routerLink]="['/notifications']">View All Notifications</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="height: 100%;">
+      <ng-template #noData>
+        <div class="text-center">
+          <div class="welcome-banner">
+            <h3 style="font-weight: bold; font-size: 50px;">{{ currentDate | date: 'fullDate' }}</h3>
+            <h1 style="font-weight: bold; font-size: 55px;">{{ currentTime }}</h1>
+            <p class="quote" style="font-weight: bold; font-size: 20px;">You do not have a dashboard to display.</p>
+            <p class="quote" style="font-weight: bold; font-size: 20px;">You are most likely not assigned to a team yet.</p>
+          </div> 
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</main>

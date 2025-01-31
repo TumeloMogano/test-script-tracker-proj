@@ -1,0 +1,74 @@
+<div class="container1">
+  <div class="subheader1">
+    <h2>Audit Logs</h2>
+    <div class="date-filter border border-secondary rounded" style="padding: 15px;">
+      <h5>Apply Filters:</h5>
+      <hr>
+      <div class="row">
+        <div class="col form-group1">
+          <input type="text" class="form-control" placeholder="Search by First Name..." [(ngModel)]="firstName" (input)="filterAuditLogs()">
+        </div>
+        <div class="col form-group1">
+          <input type="text" class="form-control" placeholder="Search by Surname..." [(ngModel)]="surname" (input)="filterAuditLogs()">
+        </div>
+        <div class="col form-group1">
+          <input type="text" class="form-control" placeholder="Search by Action Name..." [(ngModel)]="actionName" (input)="filterAuditLogs()">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col form-group1">
+          <label for="startDate">Start Date:</label>
+          <input type="date" class="form-control" [(ngModel)]="startDate" (change)="filterAuditLogs()">
+        </div>
+        <div class="col form-group1">
+          <label for="endDate">End Date:</label>
+          <input type="date" class="form-control" [(ngModel)]="endDate" (change)="filterAuditLogs()">
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-end" style="margin: 10px" *ngIf="filteredAuditLogs.length > 0">
+      <button (click)="exportToPDF()" class="btn1 btn-primary1">Export Audit Log</button>
+    </div>
+    
+    <div *ngIf="filteredAuditLogs.length === 0" class="alert text-center" style="color: #001844; border: solid 1px #001844; background-color: #869ec3; margin-top: 10px;">
+      <b>No audit logs found</b>
+    </div>
+    
+    <table *ngIf="filteredAuditLogs.length > 0" class="content-tableR">
+      <thead>
+        <tr>
+          <th>User Name</th>
+          <th>Action Name</th>
+          <!-- <th>Timestamp</th> -->
+          <th (click)="sortByTimestamp()">
+            Timestamp
+            <!-- Display the up arrow if sorting is ascending -->
+            <span *ngIf="sortDirection === 'asc'">&uarr;</span>
+            <!-- Display the down arrow if sorting is descending -->
+            <span *ngIf="sortDirection === 'desc'">&darr;</span>
+          </th>
+          <th>Table Name</th>
+          <!-- <th>Primary Key</th> -->
+          <!-- <th>Old Values</th> -->
+          <!-- <th>New Values</th> -->
+          <th>Affected Columns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of filteredAuditLogs | paginate: { itemsPerPage: 10, currentPage: page }">
+          <td>{{ log.userName }}</td>
+          <td>{{ log.actionName }}</td>
+          <td>{{ log.timeStamp | date:'short' }}</td>
+          <td>{{ log.tableName }}</td>
+          <!-- <td>{{ log.primaryKey }}</td> -->
+          <!-- <td>{{ log.oldValues }}</td> -->
+          <!-- <td>{{ log.newValues }}</td> -->
+          <td>{{ log.affectedColumns }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pagination-controls *ngIf="filteredAuditLogs.length > 0"  (pageChange)="page = $event" class="text-end"></pagination-controls>
+  </div>
+</div>

@@ -1,0 +1,124 @@
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;max-height: 80vh;
+  overflow-y: auto; 
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn1 {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #001844;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-primary1 {
+  background-color: #001844;
+  color: #ffffff;
+}
+
+.btn-primary1:hover {
+  background-color: #e0e0e0;
+  color:#001844;
+}
+
+.selected {
+  background-color: #d3d3d3; 
+  font-weight: bold;
+}
+.has-error input,
+.has-error textarea {
+  border-color: #dc3545;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875em;
+}
+
+.validation-error {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 0.25rem;
+}
+
+.selected {
+  color: #007bff;  
+  font-weight: bold;
+  cursor: pointer;
+}
+
+li {
+  cursor: pointer;  
+}
+
+li:hover {
+  background-color: #f0f0f0;  
+}
+.message-cell {
+  text-align: left; 
+  vertical-align: middle;
+  padding: 10px; 
+}
+
+.error-text {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+.unread td {
+  color: red;
+}
+
+td {
+  color: black;
+}
+
+.btn-cancel1 {
+  background-color: #cd1543;
+  color: #ffffff;
+}
+
+.btn-cancel1:hover {
+  background-color: #e0e0e0;
+  color:#cd1543;
+}

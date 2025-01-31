@@ -1,0 +1,109 @@
+<div class="container1">
+  <div class="subheader1">
+      <h2>Templates Report</h2>
+      <div class="date-filter border border-secondary rounded" style="padding: 15px;">
+        <h5>Apply Filters:</h5>
+        <hr>
+        <div class="row">
+          <div class="col form-group1">
+            <label for="minDate">Min Date:</label>
+            <input type="date" id="minDate" [(ngModel)]="minDate" class="form-control1">
+          </div>
+          <div class="col form-group1">
+            <label for="maxDate">Max Date:</label>
+            <input type="date" id="maxDate" [(ngModel)]="maxDate" class="form-control1">
+          </div>
+          <div class="col form-group1">
+            <label>Filter By:</label>
+            <select [(ngModel)]="dateType" class="form-control1" disabled>
+              <option value="createdDate">Created Date</option>
+            </select>
+          </div>
+          <div class="col form-group1">
+            <label for="filterRange" style="padding: 12px;"></label>
+            <input type="button" (click)="filterByDateRange()" class="btn btn-secondary form-control1" value="Apply Date Range Filter" style="width: 180px;">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col form-group1" style="width: 25%;">
+            <label>Filter By: Created in the Last? </label>
+            <select id="days" [(ngModel)]="days" class="form-control1">
+              <option value="">None</option>
+              <option value="30">30 Days</option>
+              <option value="60">60 Days</option>
+              <option value="90">90 Days</option>
+            </select>
+          </div>
+          <div class="col form-group1" style="width: 25%;">
+            <label for="filterRange" style="padding: 12px;"></label>
+            <input type="button" (click)="filterByDays()" class="btn btn-secondary form-control1" value="Apply Days Filter" style="width: 180px;">
+          </div>
+          <div class="col form-group1" style="width: 25%;">
+            <label for="filterRange" style="padding: 12px;"></label>
+            <input type="button" (click)="clearFilters()" class="btn btn-secondary form-control1" value="Clear Filters" style="width: 180px;">
+          </div>
+          <div class="col form-group1" style="width: 25%;">
+            <label for="filterRange" style="padding: 12px;"></label>
+            <input type="hidden"  class="form-control1" style="width: 25%;">
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="filteredTemplates.length > 0" class="text-end" style="margin: 10px">
+        <button (click)="exportToPDF()" class="btn1 btn-primary1">Export Report</button>
+      </div>
+
+      <div *ngIf="filteredTemplates.length === 0" class="alert text-center" style="color: #001844; border: solid 1px #001844; background-color: #869ec3; margin-top: 10px;">
+        <b>No results found!</b>
+      </div>
+      
+      <table *ngIf="filteredTemplates.length > 0" class="content-tableR">
+        <thead>
+          <tr>
+            <th>
+              <div class="row" style="margin:0px; padding: 0px;">
+                <div class="col" style="margin:0px; padding: 0px;">
+                  Template Name
+                </div>
+                <div class="col text-end" style="margin:0px; padding: 0px;">
+                  <box-icon name='up-arrow-alt' (click)="setOrder('templateName', false)"></box-icon>
+                  <box-icon name='down-arrow-alt' (click)="setOrder('templateName', true)"></box-icon>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="row" style="margin:0px; padding: 0px;">
+                <div class="col" style="margin:0px; padding: 0px;">
+                  Template Test
+                </div>
+                <div class="col text-end" style="margin:0px; padding: 0px;">
+                  <box-icon name='up-arrow-alt' (click)="setOrder('templateTest', false)"></box-icon>
+                  <box-icon name='down-arrow-alt' (click)="setOrder('templateTest', true)"></box-icon>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="row" style="margin:0px; padding: 0px;">
+                <div class="col" style="margin:0px; padding: 0px;">
+                  Created Date 
+                </div>
+                <div class="col text-end" style="margin:0px; padding: 0px;">
+                  <box-icon name='up-arrow-alt' (click)="setOrder('createdDate', false)"></box-icon>
+                  <box-icon name='down-arrow-alt' (click)="setOrder('createdDate', true)"></box-icon>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let template of filteredTemplates | paginate: { itemsPerPage: 20, currentPage: page }">
+            <td>{{ template.templateName }}</td>
+            <td>{{ template.templateTest }}</td>
+            <td>{{ template.createdDate | date}}</td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <pagination-controls *ngIf="filteredTemplates.length > 0" (pageChange)="page = $event" class="text-end custom-pagination"></pagination-controls>  
+</div>
+</div>

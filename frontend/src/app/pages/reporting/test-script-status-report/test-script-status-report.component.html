@@ -1,0 +1,125 @@
+<div class="container1">
+  <div class="subheader1">
+    <h2>Test Script Status Report</h2>
+    <div class="button-group text-center" role="group" aria-label="Basic example" style="margin-bottom: 10px; align-items: center;">
+      <!-- <button type="button" class="btn" (click)="setReportType('status')" style="border-top-right-radius: 0px; border-bottom-right-radius: 0px; border: 2px solid #001844; background-color: #869ec3;"><b>Test Script Status Report</b></button>
+      <button type="button" class="btn" (click)="setReportType('phase')" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px; border: 2px solid #001844; background-color: #869ec3;"><b>Test Script Status Phase Report</b></button> -->
+
+      <button class ="btn btn-secondary form-control1" [ngClass]="{'highlighted': reportType === 'status'}" style="width: 50%; font-size: 16px;" (click)="setReportType('status')"><b>Test Script Status Report</b></button> 
+      <button class ="btn btn-secondary form-control1" [ngClass]="{'highlighted': reportType === 'phase'}"style="width: 50%; font-size:16px" (click)="setReportType('phase')"><b>Test Script Status Phase Report</b></button>
+    </div>
+
+    <hr>
+
+    <div class="date-filter border border-secondary rounded" style="padding: 15px;">
+      <h5>Apply Filters:</h5>
+      <hr>
+      <div class="row">
+        <div class="col form-group1">
+          <ng-container *ngIf="reportType === 'status'">
+            <p-autoComplete [(ngModel)]="selectedProject" field="projectName" [suggestions]="filteredProjects" (completeMethod)="filterProjects($event)" placeholder="Enter project name"></p-autoComplete>
+          </ng-container>
+          <ng-container *ngIf="reportType === 'phase'">
+            <p-autoComplete [(ngModel)]="selectedPhase" field="phaseName" [suggestions]="filteredPhases" (completeMethod)="filterPhases($event)" placeholder="Enter phase name"></p-autoComplete>
+          </ng-container>
+        </div>
+        <div class="col form-group1">
+          <input type="button" id="applyFilter" (click)="applyFilter()" class="btn btn-secondary form-control1" value="Apply Filter" style="width: 180px; height: 40px; margin-right: 10px;">
+        </div>
+        <div class="col form-group1">
+          <input type="button" id="clearFilter" (click)="clearFilter()" class="btn btn-secondary form-control1" value="Clear Filter" style="width: 180px; height: 40px;">
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center" style="margin-top: 20px;">
+      <h3 *ngIf="filterApplied && sortedStatusReport.length > 0 && selectedProject && reportType === 'status'"><b>Test Script Status Report for Project: {{ selectedProject.projectName }}</b></h3>
+      <h3 *ngIf="!filterApplied"><b>Test Script Status Report across Projects</b></h3>
+    </div>
+
+    <div *ngIf="reportType === 'status'">
+      <div *ngIf="sortedStatusReport.length > 0; else noData">
+        <div class="text-end" style="margin: 10px">
+          <button (click)="exportToPDF()" class="btn1 btn-primary1">Export Report</button>
+        </div>
+
+        <div class="row">
+          <!-- <div class="col-md-8" style="width: 50%;"> 
+            <div class="chart-item" style="width: 600px; height: 600px; margin: auto;">  -->
+          <div class="col-md-8 col-sm-12"> 
+            <!-- Chart Item -->
+              <div style="width: 100%; height: auto; margin: auto;"> 
+              <canvas #pieChartContainer></canvas>
+            </div>
+          </div>
+          <!-- <div class="col-md-4" style="width: 50%;"> -->
+            <div class="col-md-4 col-sm-12">
+            <div><b>Total Number of Test Scripts: {{ totalTestScripts }}</b></div>
+            <table class="content-tableR table-condensed">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Number of Test Scripts per Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let report of sortedStatusReport">
+                  <td>{{ report.testScriptStatus }}</td>
+                  <td>{{ report.count }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div *ngIf="reportType === 'phase'">
+      <div *ngIf="sortedPhaseReport.length > 0; else noData">
+        <div class="text-end" style="margin: 10px">
+          <button (click)="exportToPDF()" class="btn1 btn-primary1">Export Report</button>
+        </div>
+
+        <div class="row">
+          <div class="col-md-8 col-sm-12"> 
+            <!-- Chart Item -->
+            <div style="width: 100%; height: auto; margin: auto;"> 
+          <!-- <div class="col-md-8" style="width: 50%;"> 
+            <div class="chart-item" style="width: 600px; height: 600px; margin: auto;">  -->
+              <canvas #multiSeriesPieChartContainer></canvas>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-12">
+          <!-- <div class="col-md-4" style="width: 50%;"> -->
+            <div *ngFor="let phase of objectKeys(totalPhaseCounts)">
+              <h3><b>Test Script Status for Phase: {{ phase }}</b></h3> 
+              <div class="text-end"><b>Total Number of Test Scripts: {{ totalPhaseCounts[phase].total }}</b></div>
+              <table class="content-tableR table-condensed">
+                <thead>
+                  <tr>
+                    <th>Status</th>
+                    <th>Number of Test Scripts per Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let status of objectKeys(totalPhaseCounts[phase])">
+                    <tr *ngIf="status !== 'total'">
+                      <td>{{ status }}</td>
+                      <td>{{ totalPhaseCounts[phase][status] }}</td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <ng-template #noData>
+      <div class="alert text-center" style="color: #001844; border: solid 1px #001844; background-color: #869ec3; margin-top: 10px;">
+        <b>No data to display found!</b>
+      </div>
+    </ng-template>
+  </div>
+</div>

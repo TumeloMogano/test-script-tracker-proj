@@ -1,0 +1,110 @@
+<div class="container1">
+  <div class="subheader1">
+      <h2>Assigned Test Scripts Report</h2>
+      <div class="date-filter border border-secondary rounded" style="padding: 15px;">
+        <h5>Apply Filters:</h5>
+        <hr>
+        <div class="row">
+          <div class="col form-group1">
+              <p-autoComplete 
+                [(ngModel)]="selectedProject" 
+                [suggestions]="filteredProjects" 
+                (completeMethod)="filterProjects($event)" 
+                field="projectName" 
+                [forceSelection]="true" 
+                placeholder="Enter project name">
+              </p-autoComplete>
+            </div>
+            <div class=" col form-group1">
+              <p-autoComplete 
+                [(ngModel)]="selectedTeam" 
+                [suggestions]="filteredTeams" 
+                (completeMethod)="filterTeams($event)" 
+                field="teamName" 
+                [forceSelection]="true" 
+                placeholder="Enter team name">
+              </p-autoComplete>
+            </div>
+            <div class="col form-group1">
+              <input type="button" id="filterRange1" (click)="generateReport()" class="btn btn-secondary form-control1" value="Apply Filter" style="width: 180px; height: 40px;">
+            </div>
+          <div class="col form-group1">
+            <input type="button" id="filterRange2" (click)="clearFilter()" class="btn btn-secondary form-control1" value="Clear Filter" style="width: 180px; height: 40px;">
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="reportData.length > 0" class="text-end" style="margin: 10px">
+        <button (click)="exportToPDF()" class="btn1 btn-primary1">Export Report</button>
+      </div>
+
+      
+    <div *ngIf="filteredReportData.length === 0" class="alert text-center" style="color: #001844; border: solid 1px #001844; background-color: #869ec3; margin-top: 10px;">
+      <b>No results found!</b>
+    </div>
+            
+    <div *ngIf="reportData.length > 0">
+      <h3>Test Script Assignment List</h3>
+      
+      <div class="total-assigned-scripts text-end" style="font-weight: bold; margin-bottom: 10px;">
+        Total Assigned Test Scripts: {{ totalAssignedScripts }}
+      </div>
+    
+      <table class="content-tableR">
+        <thead>
+          <tr>
+            <th>
+              <div class="row" style="margin:0px; padding: 0px;">
+                <div class="col" style="margin:0px; padding: 0px;">
+                  Project Name
+                </div>
+                <div class="col text-end" style="margin:0px; padding: 0px;">
+                  <box-icon name='up-arrow-alt' (click)="setOrder('projectName', false)"></box-icon>
+                  <box-icon name='down-arrow-alt' (click)="setOrder('projectName', true)"></box-icon>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="row" style="margin:0px; padding: 0px;">
+                <div class="col" style="margin:0px; padding: 0px;">
+                  Team Name
+                </div>
+                <div class="col text-end" style="margin:0px; padding: 0px;">
+                  <box-icon name='up-arrow-alt' (click)="setOrder('teamName', false)"></box-icon>
+                  <box-icon name='down-arrow-alt' (click)="setOrder('teamName', true)"></box-icon>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="row" style="margin:0px; padding: 0px;">
+                <div class="col" style="margin:0px; padding: 0px;">
+                  Assigned User
+                </div>
+                <div class="col text-end" style="margin:0px; padding: 0px;">
+                  <box-icon name='up-arrow-alt' (click)="setOrder('userName', false)"></box-icon>
+                  <box-icon name='down-arrow-alt' (click)="setOrder('userName', true)"></box-icon>
+                </div>
+              </div>
+            </th>
+            <th>
+              Assigned Test Scripts
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of filteredReportData | paginate: { itemsPerPage: 10, currentPage: page }">
+            <td>{{ item.projectName }}</td>
+            <td>{{ item.teamName }}</td>
+            <td>{{ item.userName }}</td>
+            <td>
+              <ul>
+                <li *ngFor="let script of item.testScripts">{{ script.testScriptTest }}</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="page = $event" class="text-end"></pagination-controls>
+    </div>         
+  </div>
+</div> 

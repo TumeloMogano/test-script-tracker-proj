@@ -1,0 +1,21 @@
+<div class="container1">
+  <h2>Client Themes</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="width: 10%;">Theme Nr:</th>
+        <th style="width: 75%;">Theme Name</th>
+        <th style="width: 15%; text-align: center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let theme of themes; let i = index">
+        <td (click)="viewThemeDetails(theme.themeId!)">{{ i + 1 }}</td>
+        <td (click)="viewThemeDetails(theme.themeId!)">{{ theme.themeName }}</td>
+        <td style="text-align: center">
+          <box-icon name="trash" color="red" (click)="deleteTheme(theme.themeId!)"></box-icon>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

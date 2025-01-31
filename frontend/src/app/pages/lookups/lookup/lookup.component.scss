@@ -1,0 +1,74 @@
+/* Modal CSS */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .minimalist-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    
+    /* Remove all default borders */
+    border: none;
+    /* Header Styling */
+    thead th {
+      padding: 5px;
+      text-align: left;
+      //font-weight: bold;
+      background-color: #fff;
+    }
+
+    /* Body Styling */
+    tbody td {
+        padding: 5px;
+      border-bottom: none; /* Remove bottom border from cells */
+    }
+    /* Slim border between head and body */
+    thead {
+      border-bottom: 1px solid #ddd; /* Slim border separating head and body */
+    }
+    tbody tr {
+      background-color: #fff; /* White background for table rows */
+    }
+    // tbody tr:nth-child(even) {
+    //   background-color: #f9f9f9; /* Slightly different background for alternating rows */
+    // }
+    /* Table styling in general */
+    td, th {
+        padding: 10px 6px;
+        text-align: left;
+    }
+  }

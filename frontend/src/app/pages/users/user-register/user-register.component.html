@@ -1,0 +1,43 @@
+<div class="parent1">
+    <!-- <div class="container" id="container"> -->
+        <div class="form-container sign-in-container" >
+            <form (ngSubmit)="registerUser()" #registerForm="ngForm">
+                <div class="logo-container" >
+                    <img src="assets/NewLogoWithSlogan.png" alt="Test Script Tracker Logo" class="logo-image">
+                  </div>
+                <h1 >REGISTER</h1>
+                <span>Please enter your registration code</span>
+                <h2 for="userEmailAddress">Email Address</h2>
+                <input type="email" placeholder="Enter your email address"   id="userEmailAddress" [(ngModel)]="useremail" name="userEmailAddress" required email #email="ngModel">
+                <div style="color: red;" *ngIf="email.invalid && (email.dirty || email.touched)">
+                    <div *ngIf="email.errors?.['required']">
+                        Email is required.
+                    </div>
+                    <div *ngIf="email.errors?.['email']">
+                        Invalid email address.
+                    </div>
+                </div>
+                <h2></h2>
+                <input type="email" placeholder="Enter your registration code" id="RegistrationCode" [(ngModel)]="regCode" name="RegistrationCode" required minlength="5" #regCodeField="ngModel">
+                <div style="color: red;" *ngIf="regCodeField.invalid && (regCodeField.dirty || regCodeField.touched)">
+                    <div *ngIf="regCodeField.errors?.['required']">
+                        Registration code is required.
+                    </div>
+                    <div *ngIf="regCodeField.errors?.['minlength']">
+                        Registration code must be 5 characters long.
+                    </div>
+                </div>
+                <p class="forgot-password-link">I didn't receive a code --- <a routerLink="/user-request" >Request</a>
+                </p>
+                <p class="forgot-password-link">Already have an account --- <a routerLink="/login2" >Log In</a>
+                </p>
+                <!-- <a routerLink="/user-registeroption" style="font-weight: bold;">Other</a> -->
+               <button type="submit" class="button" [disabled]="registerForm.invalid">Register</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+                <!-- <div class="overlay-panel overlay-right"> -->
+                    <img src="assets/login.jpeg" style="width: 100%; height: 100%;">
+            </div>
+    <!-- </div> -->
+    </div>

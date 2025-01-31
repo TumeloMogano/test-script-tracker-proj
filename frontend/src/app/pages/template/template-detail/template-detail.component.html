@@ -1,0 +1,201 @@
+<div class="container1">
+  <box-icon name="arrow-back" color="#001844" (click)="goBack()">Back</box-icon>
+  <div class="subheader1">
+    <div *ngIf="template">
+      <div *ngIf="!showEditForm; else editTemplateDiv">
+        <h2 class="template-title">{{template.templateName}}</h2>
+        <div class="card text-center">
+          <!-- <div class="card-header card-header-custom">
+            {{ template.templateName }}
+          </div> -->
+          <div class="card-body">
+            <p class="card-text mb-1">
+              <span class="bold-text">Template Role:</span> {{ template.templateTest }}
+            </p>
+            <p class="card-text mb-1">
+              <span class="bold-text">Template Description: <br> </span> {{ template.templateDescription }}
+            </p>
+            <p class="card-text mb-1">
+              <span class="bold-text">Template Status:</span> {{ template.templateStatusName }}
+            </p>
+            <p *ngIf="template.feedback" class="card-text mb-1 text-danger">
+              <span class="bold-text">Feedback:</span> {{ template.feedback }}
+            </p>
+          </div>
+          <div *ngIf="template.tempStatusId === 1" class="card-footer text-body-secondary" >
+            <box-icon name="edit" color="#001844" (click)="toggleEditForm(); hideTooltip('update-template-icon')" id="update-template-icon"
+            data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Update Template"></box-icon>
+            <box-icon name="trash" color="#ef0000" (click)="deleteTemplate(); hideTooltip('delete-template-icon')" id="delete-template-icon"
+            data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Delete Template"></box-icon>
+          </div>
+        </div>
+      </div>
+      
+      <ng-template #editTemplateDiv>
+        <form [formGroup]="editForm" (ngSubmit)="saveTemplateDetails()">
+          <div class="border border-secondary rounded" style="padding: 15px;">
+            <h3 class="text-center">Update Template Details:</h3>
+            <div class="row">
+              <div class="col form-group1">
+                <label for="templateName">Template Name</label>
+                <input id="templateName" formControlName="templateName" class="form-control1" placeholder="Template name" required/>
+                <div *ngIf="editForm.get('templateName')?.invalid && editForm.get('templateName')?.touched" class="text-danger">
+                  <small *ngIf="editForm.get('templateName')?.errors?.['required']">Template Name is required.</small>
+                  <small *ngIf="editForm.get('templateName')?.errors?.['minlength']">Template Name must be at least 10 characters long.</small>
+                  <small *ngIf="editForm.get('templateName')?.errors?.['maxlength']">Template Name cannot be more than 100 characters long.</small>
+                </div>
+              </div>
+              <div class="col form-group1">
+                <label for="templateTest">Template Test</label>
+                <input id="templateTest" formControlName="templateTest" class="form-control1" placeholder="Template test" required/>
+                <div *ngIf="editForm.get('templateTest')?.invalid && editForm.get('templateTest')?.touched" class="text-danger">
+                  <small *ngIf="editForm.get('templateTest')?.errors?.['required']">Template Role is required.</small>
+                  <small *ngIf="editForm.get('templateTest')?.errors?.['minlength']">Template Role must be at least 10 characters long.</small>
+                  <small *ngIf="editForm.get('templateTest')?.errors?.['maxlength']">Template Role cannot be more than 100 characters long.</small>
+                </div>
+              </div>
+            </div>
+                    
+          <div class="form-group1">
+            <label for="templateDescription">Template Description</label>
+            <textarea id="templateDescription" formControlName="templateDescription" class="form-control1" placeholder="Template description" required></textarea>
+            <div *ngIf="editForm.get('templateDescription')?.invalid && editForm.get('templateDescription')?.touched" class="text-danger">
+              <small *ngIf="editForm.get('templateDescription')?.errors?.['required']">Template Description is required.</small>
+              <small *ngIf="editForm.get('templateDescription')?.errors?.['minlength']">Template Description must be at least 10 characters long.</small>
+              <small *ngIf="editForm.get('templateDescription')?.errors?.['maxlength']">Template Description cannot be more than 200 characters long.</small>
+            </div>
+          </div>
+          <div class="form-group1 text-center">
+            <button type="submit" class="btn1 btn-primary1" style="margin-right: 10px;">Save</button>
+            <button type="button" class="btn1 btn-cancel1" (click)="cancelTemplateEdit()">Cancel</button>
+          </div>
+
+        </div>
+        </form>
+      </ng-template>
+      <br />
+      <form [formGroup]="editForm">
+        <div class="text-center"><h3>Template Test Steps</h3></div>
+        <table class="content-tableR">
+          <thead>
+            <tr>
+              <th style="text-align: center; width: 8%">Order</th>
+              <th style="width: 17%;">Description</th>
+              <th style="width: 12%;">Role</th>
+              <th style="width: 20%;">Step</th>
+              <th style="width: 15%;">Data</th>
+              <th style="width: 20%;">Additional Info</th>
+              <th style="text-align: center; width: 8%;" *ngIf="template.tempStatusId === 1">Actions</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="testSteps" style="vertical-align: middle;">
+            <tr *ngFor="let step of testStepsFormArray.controls; let i = index" [formGroupName]="i">
+              <td style="text-align: center">{{ i + 1 }}</td>
+              <td *ngIf="editingStepIndex !== i">{{ step.value.tempTestStepDescription }}</td>
+              <td *ngIf="editingStepIndex === i">
+                <input class="form-control" formControlName="tempTestStepDescription" placeholder="Test step description" required/>
+                <div *ngIf="step.get('tempTestStepDescription')?.invalid && step.get('tempTestStepDescription')?.touched" class="text-danger">
+                  <small *ngIf="step.get('tempTestStepDescription')?.errors?.['required']">Description is required.</small>
+                  <small *ngIf="step.get('tempTestStepDescription')?.errors?.['minlength']">Description must be at least 10 characters long.</small>
+                  <small *ngIf="step.get('tempTestStepDescription')?.errors?.['maxlength']">Description cannot exceed 500 characters.</small>
+                </div>
+              </td>
+              <td *ngIf="editingStepIndex !== i">{{ step.value.tempTestStepRole }}</td>
+              <td *ngIf="editingStepIndex === i">
+                <input class="form-control" formControlName="tempTestStepRole" placeholder="Test step role" required/>
+                <div *ngIf="step.get('tempTestStepRole')?.invalid && step.get('tempTestStepRole')?.touched" class="text-danger">
+                  <small *ngIf="step.get('tempTestStepRole')?.errors?.['required']">Role is required.</small>
+                  <small *ngIf="step.get('tempTestStepRole')?.errors?.['minlength']">Role must be at least 2 characters long.</small>
+                  <small *ngIf="step.get('tempTestStepRole')?.errors?.['maxlength']">Role cannot exceed 50 characters.</small>
+                </div>
+              </td>
+              <td *ngIf="editingStepIndex !== i">{{ step.value.tempTestStep }}</td>
+              <td *ngIf="editingStepIndex === i">
+                <input class="form-control" formControlName="tempTestStep" placeholder="Test step" required/>
+                <div *ngIf="step.get('tempTestStep')?.invalid && step.get('tempTestStep')?.touched" class="text-danger">
+                  <small *ngIf="step.get('tempTestStep')?.errors?.['required']">Step is required.</small>
+                  <small *ngIf="step.get('tempTestStep')?.errors?.['minlength']">Step must be at least 10 characters long.</small>
+                  <small *ngIf="step.get('tempTestStep')?.errors?.['maxlength']">Step cannot exceed 500 characters.</small>
+                </div>
+              </td>
+              <td *ngIf="editingStepIndex !== i">{{ step.value.tempTestStepData }}</td>
+              <td *ngIf="editingStepIndex === i">
+                <input class="form-control" formControlName="tempTestStepData" placeholder="Test step data" required/>
+                <div *ngIf="step.get('tempTestStepData')?.invalid && step.get('tempTestStepData')?.touched" class="text-danger">
+                  <small *ngIf="step.get('tempTestStepData')?.errors?.['required']">Data is required.</small>
+                  <small *ngIf="step.get('tempTestStepData')?.errors?.['minlength']">Data must be at least 1 character long.</small>
+                  <small *ngIf="step.get('tempTestStepData')?.errors?.['maxlength']">Data cannot exceed 500 characters.</small>
+                </div>
+              </td>
+              <td *ngIf="editingStepIndex !== i">{{ step.value.tempAdditionalInfo }}</td>
+              <td *ngIf="editingStepIndex === i">
+                <input class="form-control" formControlName="tempAdditionalInfo" placeholder="Additional info" required/>
+                <div *ngIf="step.get('tempAdditionalInfo')?.invalid && step.get('tempAdditionalInfo')?.touched" class="text-danger">
+                  <small *ngIf="step.get('tempAdditionalInfo')?.errors?.['required']">Additional Info is required.</small>
+                  <small *ngIf="step.get('tempAdditionalInfo')?.errors?.['minlength']">Additional Info must be at least 10 characters long.</small>
+                  <small *ngIf="step.get('tempAdditionalInfo')?.errors?.['maxlength']">Additional Info cannot exceed 500 characters.</small>
+                </div>
+              </td>
+              <td style="text-align: center;" *ngIf="template.tempStatusId === 1">
+                <ng-container *ngIf="editingStepIndex !== i">
+                    <box-icon name='edit' color='#001844' (click)="startEditing(i); hideTooltip('update-step-icon')" id="update-step-icon"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Update Step"></box-icon>
+                    <box-icon name='trash' color='#ef0000' (click)="deleteTestStep(i); hideTooltip('delete-step-icon')" id="delete-step-icon"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Delete Step"></box-icon>
+                  </ng-container>
+                  <ng-container *ngIf="editingStepIndex === i && addingNewStepIndex === null">
+                    <box-icon name='check-square' type='solid' color='#001844' (click)="saveTestStep(i); hideTooltip('save-icon')" id="save-icon"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Save Step"></box-icon>
+                    <box-icon name='x-square' type='solid' color='#ef0000' (click)="cancelEdit(); hideTooltip('cancel-icon')" id="cancel-icon"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cancel Step"></box-icon>
+                  </ng-container>
+                  <ng-container *ngIf="addingNewStepIndex === i">
+                    <box-icon name='check-square' type='solid' color='#001844' (click)="saveNewTestStep(i); hideTooltip('savenew-icon')" id="savenew-icon"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Save New Step"></box-icon>
+                    <box-icon name='x-square' type='solid' color='#ef0000' (click)="cancelEdit(); hideTooltip('cancelnew-icon')" id="cancelnew-icon"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cancel New Step"></box-icon>
+                  </ng-container>
+              </td>
+            </tr>
+            <tr>
+                <td colspan="7" style="text-align: end;" *ngIf="template.tempStatusId === 1">
+                    <box-icon name='plus-circle' (click)="addNewTestStepRow(testStepsFormArray.length) ; hideTooltip('add-icon')" id="add-icon"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Add Step" style="margin-right: 25px;"></box-icon>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+        <div class="form-group1 text-center">
+          <button *ngIf="template.tempStatusId === 1" type="button" class="btn1 btn-primary1" (click)="submitTemplate()">Submit</button>
+          <button *ngIf="hasPermission(Permissions.SystemAdministrator) && template.tempStatusId === 3" type="button" class="btn1 btn-primary1" (click)="approveTemplate()" style="margin-right: 10px;">Approve</button>
+          <button *ngIf="hasPermission(Permissions.SystemAdministrator) && template.tempStatusId === 3" type="button" class="btn1 btn-cancel1" (click)="rejectTemplate()">Reject</button>
+          <button *ngIf="!hasPermission(Permissions.SystemAdministrator) && template.tempStatusId === 3" type="button" class="btn1 btn-primary1" (click)="goBack()">Go to Template list</button>
+          <button *ngIf="template.tempStatusId === 5" type="button" class="btn1 btn-primary1" (click)="acknowledgeRejection()">Acknowledge Rejection</button>
+          <!-- <button *ngIf="template.tempStatusId === 4" type="button" class="btn1 btn-primary1" (click)="copyTemplate()" style="margin-right: 10px;">Copy Template</button> -->
+          <button *ngIf="hasPermission(Permissions.SystemAdministrator) && template.tempStatusId === 4" type="button" class="btn1 btn-primary1" (click)="reDraftTemplate()">Re-Draft Template</button>
+          <button *ngIf="!hasPermission(Permissions.SystemAdministrator) && template.tempStatusId === 4" type="button" class="btn1 btn-primary1" (click)="goBack()">Go to Template list</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="displayRejectDialog">
+  <p-dialog [(visible)]="displayRejectDialog" [modal]="true" [closable]="false" class="custom-confirm-dialog">
+    <div class="content-wrapper">
+      <h3 class="dialog-header">Reject Template</h3>
+      <div>
+        <p>Please provide feedback for why this template is being rejected?</p>
+        <label for="feedback" class="title"><b>Feedback</b></label>
+        <textarea id="feedback" [(ngModel)]="feedback" rows="2" required class="message" placeholder="Please enter your feedback here..."></textarea>
+      </div>
+    </div>
+      <div class="button-group">
+        <button pButton type="button" label="Submit" class="custom-confirm-button" (click)="confirmRejection()" [disabled]="!feedback"></button>
+        <button pButton type="button" label="Cancel" class="custom-cancel-button" (click)="displayRejectDialog = false"></button>
+      </div>
+  </p-dialog>
+</div>
+
+
+

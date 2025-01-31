@@ -1,0 +1,111 @@
+<div class="container1" >
+    <div class="col-md-6">
+      <box-icon name="arrow-back" color="#001844" (click)="goList()"
+        >Back</box-icon
+      >
+    </div>
+    <div class="subheader1" >
+      <div class="row">
+    <h2>User Details</h2>     
+  </div> 
+      <h2  class="user-title text-center" >{{user.userFirstName}} {{user.userSurname}}</h2>
+      <!-- <form >
+        <div class="form-group1" >
+          <label for="userName">Name: </label>
+          <p style="font-size: small;">{{user.userFirstName}}</p>
+        </div>
+        <div class="form-group1">
+          <label for="userSurname">Surname: </label>
+          <p style="font-size: small;">{{user.userSurname}}</p>
+        </div>
+        <div class="form-group1">
+          <label for="userIDNumber">ID Number: </label>
+          <p style="font-size: small;">{{user.userIDNumber}}</p>
+        </div>
+        <div class="form-group1">
+            <label for="userContactNumber">Contact Number: </label>
+            <p style="font-size: small;">{{user.userContactNumber}}</p>
+        </div>
+          <div class="form-group1">
+            <label for="userEmail">Email Address: </label>
+            <p style="font-size: small;">{{user.userEmailAddress}}</p>
+        </div>
+          <div class="form-group1" >
+           
+            <button (click)="goUpdate(user.userEmailAddress)" type="submit" class="btn1 btn-primary1"><i class='bx bxs-edit' ></i></button> <button (click)="removeUser(user.userEmailAddress)" type="button" class="btn1 btn-primary1" style="position: absolute;
+    right: 40px;"><i class='bx bxs-trash'></i></button> 
+        </div> -->
+
+        <div class="card text-center">
+          <div class="row">
+              <div class="card-body text-center">
+                <p class="card-text mb-1">
+                  <span class="bold-text">Email Address:</span> {{ user.userEmailAddress}}
+                </p>
+                <p class="card-text mb-1">
+                  <span class="bold-text">Contact Number:</span>
+                  {{ user.userContactNumber }}
+                </p>
+                <p class="card-text mb-1">
+                  <span class="bold-text">ID Number:</span>
+                  {{ user.userIDNumber }}
+                </p>
+                <!-- <p class="card-text mb-1">
+                  <span class="bold-text">Registration Status:</span>
+                  {{ user.registrationStatusName }}
+                </p> -->
+                <p class="card-text mb-1" *ngIf="user.regStatusId === 4">
+                  <span class="bold-text">Registration Date:</span>
+                  {{ user.registrationDate | date }}
+                </p>
+                <p class="card-text mb-1" *ngIf="isUser || isRegistered === false">
+                  <span class="bold-text">User Type: </span> User</p>
+                  <p class="card-text mb-1" *ngIf="isUser === false && isRegistered === true">
+                    <span class="bold-text">User Type: </span> Client Representative</p>
+              </div>
+          </div>
+          
+          <div class="card-footer text-body-secondary">
+            <box-icon
+            name="edit"
+            color="#001844"
+            *ngIf="hasPermission(Permissions.SystemAdministrator)"
+            (click)="goUpdate(user.userEmailAddress); hideTooltip('update-icon')" id="update-icon" 
+            data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Update User"
+          ></box-icon>
+            <box-icon
+              name="trash"
+              color="#ef0000" 
+              *ngIf="hasPermission(Permissions.SystemAdministrator)"
+              (click)="deleteUser(user.userEmailAddress); hideTooltip('delete-icon')" id="delete-icon" 
+              data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Delete User"
+            ></box-icon>
+          </div>
+        </div>
+
+        <div class="card mt-4" *ngIf="isUser && isRegistered" [class.disabled]="!hasPermission(Permissions.canManageUserRoles)" >
+          <div class="card-header">
+            Roles
+          </div>
+          <div class="card-body">
+            <table class="table ms-3">
+              <tbody>
+                <tr *ngFor="let role of roles">
+                  <td>{{ role.name }}</td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="role.checked"
+                      [ngModelOptions]="{ standalone: true }"
+                      (change)="toggleRole(role, $event)"
+                      class="form-check-input custom-checkbox custom-checkbox"
+                      [disabled]="!hasPermission(Permissions.canManageUserRoles)"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+  </div>

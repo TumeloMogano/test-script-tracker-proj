@@ -1,0 +1,116 @@
+@import url('../../projects/projects.component.scss'); //put this on every page that needs this styling
+
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header-container h3 {
+    margin: 0;
+  }
+
+.content-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .content-table thead tr {
+    background-color: #001844;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+  }
+  
+  .content-table th,
+  .content-table td {
+    padding: 12px 15px;
+  }
+  
+  .content-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  .content-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  
+  .content-table tbody tr:last-of-type {
+    border-bottom: 2px solid #001844;
+  }
+  
+  .content-table tbody tr.active-row {
+    font-weight: bold;
+    color: #001844;
+  }
+  .back:hover {
+    background-color: #869ec3; /* Change the colour of the background*/
+
+}
+button:hover{
+    background-color: #869ec3; /* Change the colour of the button*/
+
+}
+
+.btn-light1{
+    position: absolute;
+    right: 40px;
+}
+
+
+
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border: 2px solid #001844;
+  border-radius: 3px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.custom-checkbox:checked {
+  background-color: #001844;
+}
+
+.custom-checkbox:checked::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 2px;
+}
+
+h2.user-title {
+  background-color: #001844;
+  text-align: center;
+  color: #ffffff;
+  max-width: 100%;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.disabled .form-check-input {
+  pointer-events: none;
+}
+

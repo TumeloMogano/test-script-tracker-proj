@@ -1,0 +1,6 @@
+@TestScriptTracker_HostAddress = http://localhost:5045
+
+GET {{TestScriptTracker_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

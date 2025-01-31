@@ -1,0 +1,229 @@
+<div class="container1">
+  <div>
+    <box-icon name='arrow-back' color='#001844' (click)="goBack()">Back</box-icon>
+  </div>
+  <h2>Theme Details</h2>
+  <div class="subheader1" *ngIf="themeDetails">
+
+    <div *ngIf="!isEditing">
+      <h2 class="theme-title">{{themeDetails.theme.themeName}}</h2>
+      <div class="card text-center">
+        <!-- <div class="card-header card-header-custom">
+          {{ themeDetails.theme.themeName }}
+        </div> -->
+        <div class="card-body">
+          <p class="card-text mb-1">
+            <span class="bold-text">Font Size:</span> {{ themeDetails.theme.fontSize }}
+          </p>
+          <p class="card-text mb-1">
+            <span class="bold-text">Font:</span> {{ fontName }}
+          </p>
+        </div>
+        <div class="card-footer text-body-secondary" *ngIf="hasPermission(Permissions.canManageClients)">
+          <div class="d-flex justify-content-center">
+            <!-- <box-icon name="edit" color="#001844" (click)="enableEdit()"></box-icon> -->
+            <box-icon name="edit" color="#001844" (click)="enableEdit(); hideTooltip('enable-icon')" id="enable-icon"
+            data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Update Theme"></box-icon>
+            <!-- <box-icon name="trash" color="#ef0000" (click)="confirmDeleteTheme(themeDetails.theme.themeId!, themeDetails.theme.clientId!)"></box-icon> -->
+            <box-icon name="trash" color="#ef0000" (click)="confirmDeleteTheme(themeDetails.theme.themeId!, themeDetails.theme.clientId!); hideTooltip('delete-icon')" id="delete-icon"
+            data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Delete Theme"></box-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+      <form *ngIf="isEditing" [formGroup]="themeForm" (ngSubmit)="updateTheme()">
+        <div class="border border-secondary rounded" style="padding: 15px;">
+          <h3 class="text-center">Update Theme Details:</h3>
+          <div class="row">
+            <div class="col">
+              <div class="form-group1">
+                <label>Theme Name:</label>
+                <input type="text" formControlName="themeName" class="form-control1"  placeholder="Theme name" required>
+                <div *ngIf="submitted && themeForm.get('themeName')?.invalid">
+                  <small class="text-danger" *ngIf="themeForm.get('themeName')?.errors?.['required']">Theme Name is required.</small>
+                  <small class="text-danger" *ngIf="themeForm.get('themeName')?.errors?.['minlength']">Minimum length is 5 characters.</small>
+                  <small class="text-danger" *ngIf="themeForm.get('themeName')?.errors?.['maxlength']">Maximum length is 15 characters.</small>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group1">
+                <label>Font Size:</label>
+                <input type="number" formControlName="fontSize" class="form-control1">
+                <div *ngIf="submitted && themeForm.get('fontSize')?.invalid">
+                  <small class="text-danger" *ngIf="themeForm.get('fontSize')?.errors?.['required']">Font Size is required.</small>
+                  <small class="text-danger" *ngIf="themeForm.get('fontSize')?.errors?.['min']">Minimum font size is 8.</small>
+                  <small class="text-danger" *ngIf="themeForm.get('fontSize')?.errors?.['max']">Maximum font size is 11.</small>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group1">
+                <label>Font:</label>
+                <select formControlName="fontId" class="form-control1">
+                  <option *ngFor="let font of fonts" [value]="font.fontId">{{ font.fontName }}</option>
+                </select>
+                <div *ngIf="submitted && themeForm.get('fontId')?.invalid">
+                  <small class="text-danger" *ngIf="themeForm.get('fontId')?.errors?.['required']">Font selection is required.</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn1 btn-primary1" style="margin-right: 10px;">Update Theme</button>
+            <button type="button" class="btn1 btn-cancel1" (click)="cancelEdit()">Cancel</button>
+          </div>
+        </div>
+      </form>
+    <br/>
+
+    <div class="row" style="margin-right: 10px;">
+      <div class="col">
+        <div class="row">
+          <div class="col" style="border-radius: 10px; background-color: white; border: 1px solid #001844; margin: 10px; padding:10px">
+            <table>
+              <thead>
+                <tr>
+                  <th colspan="3" style="text-align: center; border-bottom: 1px solid #001844; font-size: 20px;">
+                    Theme Logos
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let logo of themeDetails.themeLogos" style="border-bottom: 1px solid #001844;">
+                  <ng-container *ngIf="isUpdatingLogo && currentLogoId === logo.logoId; else displayLogoImage">
+                    <td>
+                      <input type="file" (change)="onFileSelected($event, logo.logoId)" class="form-control1">
+                      <div *ngIf="logoFormErrors[logo.logoId]" style="font-size: 13px;" class="text-danger">{{ logoFormErrors[logo.logoId] }}</div>
+                    </td>
+                  </ng-container>
+                  <ng-template #displayLogoImage>
+                    <td>
+                      <img [src]="logo.logoImage" alt="Logo" style="max-width: 150px; cursor: pointer;" (click)="displayLogo(logo.logoImage)">
+                    </td>
+                  </ng-template>
+                  <td style="text-align: center; width: 40px;" *ngIf="hasPermission(Permissions.canManageClients)">
+                    <ng-container *ngIf="!isUpdatingLogo || currentLogoId !== logo.logoId">
+                      <!-- <box-icon *ngIf="logo.logoId" name='edit' color='#001844' (click)="enableLogoUpdate(logo.logoId!)"></box-icon> -->
+                      <box-icon *ngIf="logo.logoId" name="edit" color="#001844" (click)="enableLogoUpdate(logo.logoId!); hideTooltip('enablelogo-icon')" id="enablelogo-icon"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Update Logo"></box-icon>
+                      <!-- <box-icon *ngIf="logo.logoId" name='trash' color='#ef0000' (click)="removeLogo(logo.logoId!)"></box-icon> -->
+                      <box-icon *ngIf="logo.logoId" name="trash" color="#ef0000" (click)="removeLogo(logo.logoId!); hideTooltip('remove-icon')" id="remove-icon"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Remove Logo"></box-icon>
+                    </ng-container>
+                    <ng-container *ngIf="isUpdatingLogo && currentLogoId === logo.logoId">
+                      <!-- <box-icon name='check-square' type='solid' color='#001844' (click)="updateLogo()"></box-icon> -->
+                      <box-icon name="check-square" type='solid' color="#001844" (click)="updateLogo(); hideTooltip('update-icon')" id="update-icon"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Save"></box-icon>
+                      <!-- <box-icon name='x-square' type='solid' color='#ef0000' (click)="cancelLogoUpdate()"></box-icon> -->
+                      <box-icon name="x-square" type='solid' color="#ef0000" (click)="cancelLogoUpdate(); hideTooltip('cancel-icon')" id="cancel-icon"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cancel"></box-icon>
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div *ngIf="isAddingLogo && !isUpdatingLogo" class="d-flex align-items-center mb-3">
+          <input type="file" (change)="onFileSelected($event)" class="form-control1">
+          <!-- <box-icon name='check-square' type='solid' color='#001844' (click)="addLogo()"></box-icon> -->
+          <box-icon name='check-square' type='solid' color='#001844' (click)="addLogo(); hideTooltip('add-icon')" id="add-icon"
+          data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Save"></box-icon>
+
+          <!-- <box-icon name='x-square' type='solid' color='#ef0000' (click)="cancelAddLogo()"></box-icon> -->
+          <box-icon name='x-square' type='solid' color='#ef0000' (click)="cancelAddLogo(); hideTooltip('canceladd-icon')" id="canceladd-icon"
+          data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cancel"></box-icon>
+
+        </div>
+        <div *ngIf="logoError && isAddingLogo " style="font-size: 13px;" class="text-danger">{{ logoError }}</div>
+
+        <div *ngIf="!isAddingLogo && !isUpdatingLogo && hasPermission(Permissions.canManageClients)" class="mt-3 d-flex justify-content-between">
+          <p *ngIf="numLogos < 3">Want to add a new logo?</p>
+          <!-- <box-icon name='plus-square' type='solid' color='#001844' (click)="enableAddLogo()"></box-icon> -->
+          <box-icon *ngIf="numLogos < 3" name='plus-square' type='solid' color='#001844' (click)="enableAddLogo(); hideTooltip('enableadd-icon')" id="enableadd-icon"
+          data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Add Logo"></box-icon>
+        </div>
+      </div>
+    
+      <div class="col">
+        <div class="row">
+          <div style="border-radius: 10px; background-color: white; border: 1px solid #001844; margin: 10px; padding:10px">
+            <table>
+              <thead>
+                <tr>
+                  <th colspan="3" style="text-align: center; border-bottom: 1px solid #001844; font-size: 20px;">
+                    Theme Colours
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="col" *ngFor="let colourScheme of themeDetails.themeColourSchemes" style="border-bottom: 1px solid #001844;">
+                  <ng-container *ngIf="isUpdatingColour && currentColourSchemeId === colourScheme.colourSchemeId; else displayColour">
+                    <td>
+                      <input type="color" [(ngModel)]="colourScheme.colour" class="form-control1">
+                      <div *ngIf="colourError && isUpdatingColour" style="font-size: 13px;" class="text-danger">
+                        {{ colourError }}
+                      </div>
+                    </td>
+                  </ng-container>
+                  <ng-template #displayColour>
+                    <td>
+                      <div [style.backgroundColor]="colourScheme.colour" style="width: 50px; height: 50px; border-radius: 5px;"></div>
+                    </td>
+                  </ng-template>
+                  <td style="text-align: center; width: 40px;" *ngIf="hasPermission(Permissions.canManageClients)">
+                    <ng-container *ngIf="!isUpdatingColour || currentColourSchemeId !== colourScheme.colourSchemeId">
+                      <!-- <box-icon *ngIf="colourScheme.colourSchemeId" name='edit' color='#001844' (click)="enableColourUpdate(colourScheme.colourSchemeId!)"></box-icon> -->
+                      <box-icon *ngIf="colourScheme.colourSchemeId" name='edit' color='#001844' (click)="enableColourUpdate(colourScheme.colourSchemeId!); hideTooltip('updateCS-icon')" id="updateCS-icon"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Update Colour"></box-icon>
+                      <!-- <box-icon *ngIf="colourScheme.colourSchemeId" name='trash' color='#ef0000' (click)="removeColourScheme(colourScheme.colourSchemeId!)"></box-icon> -->
+                      <box-icon *ngIf="colourScheme.colourSchemeId" name='trash' color='#ef0000' (click)="removeColourScheme(colourScheme.colourSchemeId!); hideTooltip('removeCS-icon')" id="removeCS-icon"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Remove Colour"></box-icon>
+
+                    </ng-container>
+                    <ng-container *ngIf="isUpdatingColour && currentColourSchemeId === colourScheme.colourSchemeId">
+                      <!-- <box-icon name='check-square' type='solid' color='#001844' (click)="updateColourScheme()"></box-icon> -->
+                      <box-icon name='check-square' type='solid' color='#001844' (click)="updateColourScheme(); hideTooltip('csupdate-icon')" id="csupdate-icon"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Save"></box-icon>
+
+                      <!-- <box-icon name='x-square' type='solid' color='#ef0000' (click)="cancelColourUpdate()"></box-icon> -->
+                      <box-icon name='x-square' type='solid' color='#ef0000' (click)="cancelColourUpdate(); hideTooltip('cscancel-icon')" id="cscancel-icon"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cancel"></box-icon>
+
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div *ngIf="isAddingColour && !isUpdatingColour" class="d-flex align-items-center mb-3">
+          <input type="color" #newColourPicker class="form-control1">
+
+          <!-- <box-icon name='check-square' type='solid' color='#001844' (click)="addColourScheme(newColourPicker.value)"></box-icon> -->
+          <box-icon name='check-square' type='solid' color='#001844' (click)="addColourScheme(newColourPicker.value); hideTooltip('addcs-icon')" id="addcs-icon"
+          data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Save"></box-icon>
+
+          <!-- <box-icon name='x-square' type='solid' color='#ef0000' (click)="cancelAddColour()"></box-icon> -->
+          <box-icon name='x-square' type='solid' color='#ef0000' (click)="cancelAddColour(); hideTooltip('canceladdcs-icon')" id="canceladdcs-icon"
+          data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cancel"></box-icon>
+
+        </div>
+        <div *ngIf="colourError && isAddingColour" style="font-size: 13px;" class="text-danger">
+          {{ colourError }}
+        </div>
+        <div *ngIf="!isAddingColour && !isUpdatingColour && hasPermission(Permissions.canManageClients)" class="mt-3 d-flex justify-content-between">
+          <p *ngIf="numColours < 4">Want to add a new colour?</p>
+          <!-- <box-icon name='plus-square' type='solid' color='#001844' (click)="enableAddColour()"></box-icon> -->
+          <box-icon *ngIf="numColours < 4" name='plus-square' type='solid' color='#001844' (click)="enableAddColour(); hideTooltip('enableAddcs-icon')" id="enableAddcs-icon"
+          data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Add Colour"></box-icon>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

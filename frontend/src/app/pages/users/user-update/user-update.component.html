@@ -1,0 +1,106 @@
+<div class="container1">
+  <box-icon name="arrow-back" color="#001844" (click)="goList()"></box-icon>
+    <h2>User Details</h2>
+    <div class="subheader1">
+      <h3>Update User</h3>
+    </div>
+    <hr style="margin-bottom: 25px;">
+    <!-- <h3 class="user-title text-center">Update User: {{user.userFirstName}} {{user.userSurname}}</h3> -->
+    <!-- <p></p> -->
+    <form (ngSubmit)="updateUser()" [formGroup]="userForm">
+        <div class="row">
+          <div class="col form-group1">
+            <label for="userFirstName" class="form-label">Name:</label>
+            <input type="text" id="userFirstName" class="form-control1" formControlName="userFirstName" placeholder="Enter your first name" required>
+            <div style="color: red;" *ngIf="userForm.get('userFirstName')?.invalid && (userForm.get('userFirstName')?.dirty || userForm.get('userFirstName')?.touched)">
+              <div *ngIf="userForm.get('userFirstName')?.errors?.['required']">
+                First name is required.
+              </div>
+              <div *ngIf="userForm.get('userFirstName')?.errors?.['pattern']">
+                First name can only contain letters.
+              </div>
+              <div *ngIf="userForm.get('userFirstName')?.errors?.['minlength']">
+                First name must be at least 2 characters long.
+              </div>
+              <div *ngIf="userForm.get('userFirstName')?.errors?.['maxlength']">
+                First name cannot be more than 50 characters long.
+              </div>
+            </div>
+          </div>
+      
+          <div class="col form-group1">
+            <label for="userSurname" class="form-label">Surname</label>
+            <input type="text" id="userSurname" class="form-control1" formControlName="userSurname" placeholder="Enter your surname" required>
+            <div style="color: red;" *ngIf="userForm.get('userSurname')?.invalid && (userForm.get('userSurname')?.dirty || userForm.get('userSurname')?.touched)">
+              <div *ngIf="userForm.get('userSurname')?.errors?.['required']">
+                Surname is required.
+              </div>
+              <div *ngIf="userForm.get('userSurname')?.errors?.['pattern']">
+                Surname can only contain letters.
+              </div>
+              <div *ngIf="userForm.get('userSurname')?.errors?.['minlength']">
+                Surname must be at least 2 characters long.
+              </div>
+              <div *ngIf="userForm.get('userSurname')?.errors?.['maxlength']">
+                Surname cannot be more than 50 characters long.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col form-group1">
+            <label for="userIDNumber" class="form-label">ID Number</label>
+            <input type="text" id="userIDNumber" class="form-control1" formControlName="userIDNumber" placeholder="Enter your ID Number" required>
+            <div style="color: red;" *ngIf="userForm.get('userIDNumber')?.invalid && (userForm.get('userIDNumber')?.dirty || userForm.get('userIDNumber')?.touched)">
+              <div *ngIf="userForm.get('userIDNumber')?.errors?.['required']">
+                ID Number is required.
+              </div>
+              <div *ngIf="userForm.get('userIDNumber')?.errors?.['pattern']">
+                Invalid ID Number format.
+              </div>
+              <div *ngIf="userForm.get('userIDNumber')?.errors?.['invalidIdNumber']">
+                Invalid ID Number.
+              </div>
+              <div *ngIf="userForm.get('userIDNumber')?.errors?.['ageOutOfRange']">
+                User must be between 18 and 60 years old.
+              </div>
+            </div>
+          </div>
+      
+          <div class=" col form-group1">
+            <label for="userContactNumber" class="form-label">Contact Number</label>
+            <input type="tel" id="userContactNumber" class="form-control1" formControlName="userContactNumber" placeholder="Enter your contact number" required>
+            <div style="color: red;" *ngIf="userForm.get('userContactNumber')?.invalid && (userForm.get('userContactNumber')?.dirty || userForm.get('userContactNumber')?.touched)">
+              <div *ngIf="userForm.get('userContactNumber')?.errors?.['required']">
+                Contact Number is required.
+              </div>
+              <div *ngIf="userForm.get('userContactNumber')?.errors?.['pattern']">
+                Invalid contact number format.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row row-cols-2">
+          <div class="col form-group1">
+            <label for="userEmailAddress" class="form-label">Email Address</label>
+            <input type="email" id="userEmailAddress" class="form-control1" formControlName="userEmailAddress" placeholder="Enter your email address" required>
+            <div style="color: red;" *ngIf="userForm.get('userEmailAddress')?.invalid && (userForm.get('userEmailAddress')?.dirty || userForm.get('userEmailAddress')?.touched)">
+              <div *ngIf="userForm.get('userEmailAddress')?.errors?.['required']">
+                Email Address is required.
+              </div>
+              <div *ngIf="userForm.get('userEmailAddress')?.errors?.['email']">
+                Invalid email format.
+              </div>
+            </div>
+          </div>
+        </div>
+    
+            <!-- Submit and Cancel Buttons -->
+        <div class="d-flex justify-content-center mt-4">                    
+          <button type="submit" class="btn1 btn-primary1" [disabled]="userForm.invalid">Submit</button>   
+          <button type="button" class="btn1 btn-cancel1 ms-2" (click)="goList()">Cancel</button>
+        </div>
+    </form>
+</div>

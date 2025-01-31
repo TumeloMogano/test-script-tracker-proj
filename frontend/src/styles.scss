@@ -1,0 +1,364 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+
+//Global Font -> Poppins
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+//FORM GROUP STYLES
+
+.container1 {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .container1 h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #001844;
+    font-weight: bold;
+
+  }
+  
+  .subheader1 h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #869ec3;
+
+    font-weight: bold;
+    padding-top: 10px;
+  }
+  
+  .form-group1 {
+    margin-bottom: 20px;
+  }
+  
+  .form-group1 label {
+    display: block;
+    margin-bottom: 5px;
+    color: #001844;
+  }
+  
+  .form-control1 {
+    width: 100%;
+    padding: 5px;
+    font-size: 13px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .form-control1:focus {
+    border-color: #869ec3;
+    outline: none;
+  }
+  
+  textarea.form-control1 {
+    height: 100px;
+    resize: none;
+  }
+  
+  .btn1 {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #001844;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-primary1 {
+    background-color: #001844;
+    color: #ffffff;
+  }
+  
+  .btn-primary1:hover {
+    background-color: #e0e0e0;
+    color:#001844;
+  }
+
+  .btn-cancel1 {
+    background-color: #cd1543;
+    color: #ffffff;
+  }
+  
+  .btn-cancel1:hover {
+    background-color: #e0e0e0;
+    color:#cd1543;
+  }
+
+
+
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+/*******************************************************************************************************/
+//TABLE STYLES
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-container1 h3 {
+    margin: 0;
+  }
+
+  .content-table {
+
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    table-layout: fixed; /* Makes the table more responsive */
+}
+
+.content-table thead tr {
+
+    background-color: #001844;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+    padding: 12px 15px;
+    word-wrap: break-word; /* Ensures content wraps within the cell */
+}
+
+.content-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+    //overflow: visible;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+    border-bottom: 2px solid #001844;
+    overflow: visible;
+}
+
+.content-table tbody tr.active-row {
+    font-weight: bold;
+    color: #001844;
+}
+
+@media (max-width: 768px) {
+    .content-table th,
+    .content-table td {
+        padding: 8px 10px; /* Reduces padding for smaller screens */
+    }
+
+    .content-table {
+        font-size: 0.8em; /* Adjusts font size for smaller screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .content-table thead {
+        display: none; /* Hides the header on very small screens */
+    }
+
+    .content-table, .content-table tbody, .content-table tr, .content-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .content-table tr {
+        margin-bottom: 15px;
+    }
+
+    .content-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .content-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+        white-space: nowrap;
+    }
+}
+
+
+
+
+//************************************************************************************
+//************************************************************************************
+//**************************REPORTING TABLES******************************************
+.content-tableR {
+
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  table-layout: fixed; /* Makes the table more responsive */
+}
+
+.content-tableR thead tr {
+  background-color: #869ec3;
+  color: #001844;
+  text-align: left;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.content-tableR th,
+.content-tableR td {
+  padding: 12px 15px;
+  word-wrap: break-word; /* Ensures content wraps within the cell */
+}
+
+.content-tableR tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.content-tableR tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.content-tableR tbody tr:last-of-type {
+  border-bottom: 2px solid #869ec3;
+}
+
+.content-tableR tbody tr.active-row {
+  font-weight: bold;
+  color: #001844;
+}
+
+@media (max-width: 768px) {
+  .content-tableR th,
+  .content-tableR td {
+      padding: 8px 10px; /* Reduces padding for smaller screens */
+  }
+
+  .content-tableR {
+      font-size: 0.8em; /* Adjusts font size for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .content-tableR thead {
+      display: none; /* Hides the header on very small screens */
+  }
+
+  .content-tableR, .content-tableR tbody, .content-tableR tr, .content-tableR td {
+      display: block;
+      width: 100%;
+  }
+
+  .content-tableR tr {
+      margin-bottom: 15px;
+  }
+
+  .content-tableR td {
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+  }
+
+  .content-tableR td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      width: 50%;
+      padding-left: 15px;
+      font-weight: bold;
+      text-align: left;
+      white-space: nowrap;
+  }
+}
+//************************************************************************************
+//************************************************************************************
+
+
+  /* primeng confirm dialog custom styling */
+  .p-toast-bottom-center {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* primeng card styling (for client)*/
+  .p-card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  }
+  
+  .p-card img {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin-left: auto;
+  }
+  
+  .p-card .text-end {
+    margin-top: 1rem;
+  }
+
+  /*Styling for invalid validation (red border-outline for inputbox)*/
+  .input-invalid {
+    border: 2px solid rgb(163, 58, 58);
+  }
+
+/* styling for the chevron down icon for toggling components*/
+  .chevron-icon {
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    padding: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .chevron-icon:hover {
+    background-color: #d3d3d3; /* Light grey color */
+  }
+
+  .clear-search-icon {
+    position: absolute;
+    right: 55px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+

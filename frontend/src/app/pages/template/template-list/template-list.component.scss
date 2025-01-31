@@ -1,0 +1,79 @@
+.modal1 {
+  display: none;
+  position: fixed;
+  z-index: 1050;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; 
+  outline: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal1.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-dialog1 {
+  position: relative;
+  width: 80%;
+  max-width: 600px; 
+  margin: auto;
+  overflow: hidden;
+}
+
+.modal-content1 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header1,
+.modal-body1,
+.modal-footer1 {
+  padding: 1rem;
+}
+
+.modal-header1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title1 {
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .modal-dialog1 {
+    width: 90%;
+    max-width: 100%;
+  }
+
+  .modal-content1 {
+    max-height: 90vh;
+  }
+}
+
+.pending-review-circle {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: blue;
+  border-radius: 50%;
+  margin-left: 10px; /* Adjust as needed */
+}
+
+  

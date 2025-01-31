@@ -1,0 +1,140 @@
+<div class="container1">
+    <box-icon name="arrow-back" color="#001844" (click)="goBack()">Back</box-icon>
+    <h2>Clients</h2>
+    <div class="subheader1">
+        <h3 style="margin-top: 2px; padding-top: 0;">Add New Client...</h3>
+    </div>
+    <div class="row justify-content-between">
+        <div class="col-11"><p style="margin-top: 5px; margin-bottom: 0;padding-bottom: 0;">Client Information</p></div>
+        <!-- <div class="col-1 align-contents-end" style="margin-right: 0; padding-right: 0;"><box-icon name='chevron-down'></box-icon></div> -->
+    </div>
+    
+    <hr style="margin-bottom: 20px;margin-top: 5px;"> 
+
+    <form [formGroup]="createClientForm" (ngSubmit)="onSubmit()">
+            <div class="row justify-content">
+                <div class="form-group1  col-3" >
+                    <label for="clientName">Client Name *</label>
+                    <input type="text" id="clientName" #firstInput class="form-control1" formControlName="clientName" placeholder="Client Name" required
+                    [ngClass]="{'input-invalid': f['clientName'].touched && f['clientName'].invalid}" (blur)="onBlur()">
+                    <div *ngIf="f['clientName'].touched && f['clientName'].invalid" class="text-danger">
+                        <small *ngIf="f['clientName'].errors?.['required']" style="color: rgb(163, 58, 58);">Client Name is required.</small>
+                    </div>
+                </div>
+                <div class="form-group1 col-3">
+                    <label for="clientEmail">Client Email *</label>
+                    <input type="text" id="clientEmail" class="form-control1" placeholder="Client Email" formControlName="clientEmail" required
+                    [ngClass]="{'input-invalid': f['clientEmail'].touched && f['clientEmail'].invalid}" (blur)="onBlur()">
+                    <div *ngIf="f['clientEmail'].touched && f['clientEmail'].invalid" class="text-danger">
+                        <small *ngIf="f['clientEmail'].errors?.['required']" style="color: rgb(163, 58, 58);">Client Email is required.</small>
+                        <small *ngIf="f['clientEmail'].errors?.['email']" style="color: rgb(163, 58, 58);">Invalid email address.</small>
+                    </div>
+                </div>
+                <div class="form-group1 col-3">
+                    <label for="clientNumber">Client Number *</label>
+                    <input type="text" id="clientNumber" class="form-control1" placeholder="Client Number" formControlName="clientNumber" required
+                    [ngClass]="{'input-invalid': f['clientNumber'].touched && f['clientNumber'].invalid}" (blur)="onBlur()">
+                    <div *ngIf="f['clientNumber'].touched && f['clientNumber'].invalid" class="text-danger">
+                        <small *ngIf="f['clientNumber'].errors?.['required']" style="color: rgb(163, 58, 58);">Client Number is required.</small>
+                        <small *ngIf="f['clientNumber'].errors?.['pattern']" style="color: rgb(163, 58, 58);">Client Number must be a number.</small>
+                        <small *ngIf="f['clientNumber'].errors?.['minlength']" style="color: rgb(163, 58, 58);">Client Number must be 10 digits.</small>
+                        <small *ngIf="f['clientNumber'].errors?.['maxlength']" style="color: rgb(163, 58, 58);">Client Number must contain only 10 digits.</small>
+                    </div>
+                </div>
+                <div class="form-group1 col-3">
+                    <label for="clientRegistrationNr">Registration Nr *</label>
+                    <input type="text" id="clientRegistrationNr" class="form-control1" placeholder="Registration Number" formControlName="clientRegistrationNr" required
+                    [ngClass]="{'input-invalid': f['clientRegistrationNr'].touched && f['clientRegistrationNr'].invalid}" (blur)="onBlur()">
+                    <div *ngIf="f['clientRegistrationNr'].touched && f['clientRegistrationNr'].invalid" class="text-danger">
+                        <small *ngIf="f['clientRegistrationNr'].errors?.['required']" style="color: rgb(163, 58, 58);">Registration Number is required.</small>
+                    </div>
+                </div> 
+            </div>
+
+     <div class="row justify-content-between">
+          <div class="col-11"><p style="margin-top: 5px; margin-bottom: 0;padding-bottom: 0;">Geographic Information</p></div>       
+    </div>   
+      <hr style="margin-bottom: 20px; margin-top: 5px;">              
+            <div class="row justify-content-between">
+                <div class="form-group1 col-3">
+                    <label for="addressStreetName">Street Name *</label>
+                    <input type="text" id="addressStreetName" class="form-control1" placeholder="Street Name" formControlName="addressStreetName" required
+                    [ngClass]="{'input-invalid': f['addressStreetName'].touched && f['addressStreetName'].invalid}" (blur)="onBlur()">
+                    <div *ngIf="f['addressStreetName'].touched && f['addressStreetName'].invalid" class="text-danger">
+                        <small *ngIf="f['addressStreetName'].errors?.['required']" style="color: rgb(163, 58, 58);">Street Name is required.</small>
+                    </div>
+                </div>
+                <div class="form-group1 col-3">
+                    <label for="addressStreetNumber">Street Number *</label>
+                    <input type="text" id="addressStreetNumber" class="form-control1" placeholder="Street Number" formControlName="addressStreetNumber" required
+                    [ngClass]="{'input-invalid': f['addressStreetNumber'].touched && f['addressStreetNumber'].invalid}" (blur)="onBlur()">
+                    <div *ngIf="f['addressStreetNumber'].touched && f['addressStreetNumber'].invalid" class="text-danger">
+                        <small *ngIf="f['addressStreetNumber'].errors?.['required']" style="color: rgb(163, 58, 58);">Street Number is required.</small>
+                        <small *ngIf="f['addressStreetNumber'].errors?.['pattern']" style="color: rgb(163, 58, 58);">Street Number must be a number.</small>
+                    </div>
+                </div> 
+                <div class="form-group1 col-3">
+                    <label for="postalCode">Postal Code *</label>
+                    <input type="text" id="postalCode" class="form-control1" placeholder="Postal Code" formControlName="postalCode" required
+                    [ngClass]="{'input-invalid': f['postalCode'].touched && f['postalCode'].invalid}" (blur)="onBlur()">
+                    <div *ngIf="f['postalCode'].touched && f['postalCode'].invalid" class="text-danger">
+                        <small *ngIf="f['postalCode'].errors?.['required']" style="color: rgb(163, 58, 58);">Postal Code is required.</small>
+                        <small *ngIf="f['postalCode'].errors?.['pattern']" style="color: rgb(163, 58, 58);">Postal Code must be a number.</small>
+                    </div>
+                </div>
+
+                <div class="form-group1 col-3">
+                    <label for="country">Country *</label>
+                    <select id="country" class="form-control1" formControlName="countryId" (change)="onCountryChange($event)"
+                        [ngClass]="{'input-invalid': f['countryId'].touched && f['countryId'].invalid}" (blur)="onBlur()">
+                    <option value="" disabled selected>Select a country</option>
+                    <option *ngFor="let country of countries" [value]="country.countryId">{{ country.countryName }}</option>
+                    </select>
+                    <div *ngIf="f['countryId'].touched && f['countryId'].invalid" class="text-danger">
+                      <small *ngIf="f['countryId'].errors?.['required']" style="color: rgb(163, 58, 58);">Country is required.</small>
+                    </div>
+                </div>
+
+                <div class="form-group1 col-3">
+                    <label for="region">Region *</label>
+                    <select id="region" class="form-control1" formControlName="regionId" (change)="onRegionChange($event)"
+                    [ngClass]="{'input-invalid': f['regionId'].touched && f['regionId'].invalid}" (blur)="onBlur()">
+                      <option value="" disabled selected>Select a region</option>
+                      <option *ngFor="let region of regions" [value]="region.regionId">{{ region.regionName }}</option>
+                    </select>
+                    <div *ngIf="f['regionId'].touched && f['regionId'].invalid" class="text-danger">
+                        <small *ngIf="f['regionId'].errors?.['required']" style="color: rgb(163, 58, 58);">Region is required.</small>
+                    </div>
+                </div>
+
+                <div class="form-group1 col-3">
+                    <label for="city">City *</label>
+                    <select id="city" class="form-control1" formControlName="cityId" (change)="onCityChange($event)"
+                    [ngClass]="{'input-invalid': f['cityId'].touched && f['cityId'].invalid}" (blur)="onBlur()">
+                        <option value="" disabled selected>Select a city</option>
+                        <option *ngFor="let city of cities" [value]="city.cityId">{{ city.cityName }}</option>
+                    </select>
+                    <div *ngIf="f['cityId'].touched && f['cityId'].invalid" class="text-danger">
+                        <small *ngIf="f['cityId'].errors?.['required']" style="color: rgb(163, 58, 58);">City is required.</small>
+                    </div>
+                </div>
+                <div class="col-3">
+                  <!-- DO NOT REMOVE   -->
+                </div>
+                <div class="form-check col-3  mt-4">
+                    <input class="form-check-input custom-checkbox" type="checkbox" formControlName="addClientRep" id="flexCheckDefault" [disabled]="!createClientForm.valid">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      Add Client Representative?
+                    </label>
+                </div>
+            </div> 
+        
+            <div class="d-flex justify-content-center mt-4">                    
+                <button type="submit" class="btn1 btn-primary1" [disabled]="!createClientForm.valid">Submit</button>   
+                <button type="button" class="btn1 btn-cancel1 ms-2" (click)="cancel()">Cancel</button>
+            </div>
+
+    </form>
+    
+    
+  </div>
