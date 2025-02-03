@@ -30,8 +30,8 @@ Test Script Tracker is a tracking and process management system designed to tran
 - Swagger (API Documentation)
 
 ## 📸 Screenshots
-> *(Add project screenshots here for better visualization)*
-> 
+> *(Click the link below to view all project screenshots)*
+>  📄 [View Screenshots (PDF)](docs/images/Project-Screenhots.pdf) 
 
 ## ⚙️ Installation & Setup
 ### **1. Clone the Repository**
