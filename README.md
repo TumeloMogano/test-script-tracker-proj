@@ -36,8 +36,8 @@ Test Script Tracker is a tracking and process management system designed to tran
 ## ⚙️ Installation & Setup
 ### **1. Clone the Repository**
 ```sh
- git clone https://github.com/<your-username>/TestScriptTracker.git
- cd TestScriptTracker
+ git clone https://github.com/tumelomogano/test-script-tracker-proj.git
+ cd test-script-tracker-proj
 ```
 
 ### **2. Backend Setup (ASP.NET Core API)**
@@ -48,7 +48,7 @@ Test Script Tracker is a tracking and process management system designed to tran
  dotnet run
 ```
 - Ensure **MS SQL Server** is running and configured in `appsettings.json`.
-- The API should now be running on `http://localhost:7039` (or as configured).
+- The API should now be running on `http://localhost:7089` (or as configured).
 
 ### **3. Frontend Setup (Angular)**
 ```sh
@@ -61,14 +61,12 @@ Test Script Tracker is a tracking and process management system designed to tran
 ## 🔗 API Endpoints
 | Method | Endpoint | Description |
 |--------|---------|-------------|
-| GET | /api/projects | Get all projects |
-| POST | /api/projects | Create a new project |
-| PUT | /api/projects/{id} | Update a project |
-| DELETE | /api/projects/{id} | Delete a project |
-| GET | /api/testscripts | Get all test scripts |
-| POST | /api/testscripts | Create a new test script |
+| GET | /api/projects/GetAllProjects | Get all projects |
+| POST | /api/projects/CreateProject | Create a new project |
+| PUT | /api/projects/UpdateProject/{id} | Update a project |
+| DELETE | /api/projects/RemoveProject/{id} | Delete a project |
 
-*(More detailed API documentation available via Swagger at `http://localhost:7039/swagger`)*
+*(More detailed API documentation available via Swagger at `http://localhost:7089/swagger`)*
 
 ## 🔄 Deployment
 - **Frontend**: Deployed via Azure Static Web App.
@@ -77,7 +75,7 @@ Test Script Tracker is a tracking and process management system designed to tran
 - **Hosted instance taken down after project completion and marking completion.**
 
 ## 📧 Contact
-- **Developer:** [Collaborately developed school project. I was responsible for the backend architecture, authentication and authorization using Identity and JWT Auth. I also took full responsibility for setting up the deployment environment for both the frontend and backend utilising Github Actions CI/CD pipeline. ]
+- **Developer:** [Collaborately developed school project. I was responsible for the backend architecture, full stack authentication and authorization policies using Identity and JWT Auth. I also took full responsibility for setting up the deployment environment for both the frontend and backend utilising Github Actions CI/CD pipeline. ]
 - **Email:** [ramalau.mogano1@gmail.com]
 - **LinkedIn:** [linkedin.com/in/rtmogano]
 
