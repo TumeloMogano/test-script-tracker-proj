@@ -31,7 +31,7 @@ Test Script Tracker is a tracking and process management system designed to tran
 
 ## 📸 Screenshots
 > *(Click the link below to view all project screenshots)*
->  📄 [View Screenshots (PDF)](docs/images/Project-Screenhots.pdf) 
+📄 [View Screenshots (PDF)](docs/images/Project-Screenshots.pdf) 
 
 ## ⚙️ Installation & Setup
 ### **1. Clone the Repository**
