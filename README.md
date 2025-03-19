@@ -33,41 +33,6 @@ Test Script Tracker is a tracking and process management system designed to tran
 > *(Click the link below to view all project screenshots)*
 📄 [View Screenshots (PDF)](docs/images/Project-Screenshots.pdf) 
 
-## ⚙️ Installation & Setup
-### **1. Clone the Repository**
-```sh
- git clone https://github.com/tumelomogano/test-script-tracker-proj.git
- cd test-script-tracker-proj
-```
-
-### **2. Backend Setup (ASP.NET Core API)**
-```sh
- cd backend
- dotnet restore
- dotnet build
- dotnet run
-```
-- Ensure **MS SQL Server** is running and configured in `appsettings.json`.
-- The API should now be running on `http://localhost:7089` (or as configured).
-
-### **3. Frontend Setup (Angular)**
-```sh
- cd frontend
- npm install
- ng serve
-```
-- The Angular app should now be running on `http://localhost:4200`.
-
-## 🔗 API Endpoints
-| Method | Endpoint | Description |
-|--------|---------|-------------|
-| GET | /api/projects/GetAllProjects | Get all projects |
-| POST | /api/projects/CreateProject | Create a new project |
-| PUT | /api/projects/UpdateProject/{id} | Update a project |
-| DELETE | /api/projects/RemoveProject/{id} | Delete a project |
-
-*(More detailed API documentation available via Swagger at `http://localhost:7089/swagger`)*
-
 ## 🔄 Deployment
 - **Frontend**: Deployed via Azure Static Web App.
 - **Backend**: API hosted on Azure App Service instance.
@@ -75,7 +40,7 @@ Test Script Tracker is a tracking and process management system designed to tran
 - **Hosted instance taken down after project completion and marking completion.**
 
 ## 📧 Contact
-- **Developer:** [Collaborately developed school project. I was responsible for the backend architecture, full stack authentication and authorization policies using Identity and JWT Auth. I also took full responsibility for setting up the deployment environment for both the frontend and backend utilising Github Actions CI/CD pipeline. ]
+- **Developer:** [Collaborately developed school project. I was responsible for the backend architecture, full stack authentication and authorization policies using Identity and JWT Auth. I also took full responsibility for building the cloud & deployment environment for both the frontend and backend utilising Github Actions CI/CD pipeline. ]
 - **Email:** [ramalau.mogano1@gmail.com]
 - **LinkedIn:** [linkedin.com/in/rtmogano]
 
