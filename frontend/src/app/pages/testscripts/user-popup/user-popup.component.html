@@ -1,9 +1,0 @@
-<h1 mat-dialog-title>Select a User</h1>
-<div mat-dialog-content>
-  <mat-list>
-    <mat-list-item *ngFor="let user of data.users" (click)="selectUser(user)">
-      <h4 mat-line>{{ user.userName }} {{ user.userSurname }}</h4>
-      <p mat-line>{{ user.userEmailAddress }}</p>
-    </mat-list-item>
-  </mat-list>
-</div>
