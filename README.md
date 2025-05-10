@@ -40,9 +40,9 @@ Test Script Tracker is a tracking and process management system designed to tran
 - **Hosted instance taken down after project completion and marking completion.**
 
 ## 📧 Contact
-- **Developer:** [Collaborately developed school project. I was responsible for the backend architecture, full stack authentication and authorization policies using Identity and JWT Auth. I also took full responsibility for building the cloud & deployment environment for both the frontend and backend utilising Github Actions CI/CD pipeline. ]
+- **Developer:** This university capstone project was collaboratively developed for our industry client, EPI-USE. My primary responsibilities included designing the backend architecture, implementing full-stack authentication and authorization using Identity and JWT authentication, and setting up the cloud and deployment environment. I also took full ownership of configuring CI/CD pipelines for both the frontend and backend using GitHub Actions.]
 - **Email:** [ramalau.mogano1@gmail.com]
-- **LinkedIn:** [linkedin.com/in/rtmogano]
+- **LinkedIn:** [www.linkedin.com/in/rtmogano]
 
 ---
 
